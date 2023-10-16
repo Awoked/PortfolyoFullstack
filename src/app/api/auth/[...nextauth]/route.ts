@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentailsProvider from "next-auth/providers/credentials";
 import prisma from "../../../../../prisma/client";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     providers: [
         CredentailsProvider({
             name: "creds",
