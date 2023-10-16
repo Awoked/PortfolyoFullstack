@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.section-title{
+  @apply flex justify-center py-2;
+}
+.section-title h1, .section-title h2 {
+  @apply text-xl xl:text-3xl 2xl:text-4xl font-bold;
+}
+
+.link-v1{
+  @apply font-semibold text-blue-700 hover:text-blue-400 transition-colors;
+}
+
+.react-images__view-image {
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+
+.footer-background {
+  background: rgb(154,154,154);
+  background: linear-gradient(0deg, rgba(154,154,154,0.47942927170868344) 0%, rgba(255,255,255,0) 44%);
+}
+
+.project-link{
+  @apply flex gap-2 items-center text-purple-800 hover:opacity-70 transition-opacity;
+}
+
+.contact-form-input{
+  @apply border py-1.5 px-3 rounded-md outline-none focus:border-gray-600 hover:border-gray-600 transition-all;
+}
+.form-group {
+  @apply flex flex-col gap-1;
+}
+.form-group label{
+  @apply text-sm font-medium ml-2 opacity-90;
+}
+.form-group .error{
+  @apply text-xs font-light text-red-500;
+}
+
+.button-filled-v1{
+  @apply py-1.5 px-2 text-sm xl:text-base border cursor-pointer font-medium bg-blue-700 text-white rounded-lg hover:border-blue-700 hover:text-blue-700 hover:bg-white transition-colors;
+}

@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  userName String @unique
+  role     String @default("user")
+  password String
+}
+
+model SectionData {
+  id             Int       @id @default(autoincrement())
+  section        String    @unique
+  subTitle       String?
+  title          String?
+  description    String?
+  content        String?   @db.MediumText
+  firstLinkHref  String?
+  firstLinkText  String?
+  secondLinkHref String?
+  secondLinkText String?
+  Gallery        Gallery[]
+}
+
+model Gallery {
+  id        Int         @id @default(autoincrement())
+  gallery   SectionData @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId Int
+  linkHref  String
+  title     String?
+}
