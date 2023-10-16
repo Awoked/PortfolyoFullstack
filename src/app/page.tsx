@@ -11,26 +11,26 @@ import ContactSection from "@/app/components/ContactSection";
 const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 
 
-const getData = async () => {
-  try {
-    console.log('process.env.API_BASE_URL ', process.env.API_BASE_URL  )
-    const response = await fetch(`${process.env.API_BASE_URL}/sections`, {
-      next:{
-        revalidate: 0
-      }
-    });
+// const getData = async () => {
+//   try {
+//     console.log('process.env.API_BASE_URL ', process.env.API_BASE_URL  )
+//     const response = await fetch(`${process.env.API_BASE_URL}/sections`, {
+//       next:{
+//         revalidate: 0
+//       }
+//     });
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log('error', error)
-  }
-}
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.log('error', error)
+//   }
+// }
 
 export default async function Home() {
 
 
-  const myData = await getData();
+  // const myData = await getData();
 
   return (
     <main className={`${chivo_mono.className} transition-all`}>
