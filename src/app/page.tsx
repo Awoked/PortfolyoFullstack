@@ -11,10 +11,17 @@ import ContactSection from "@/app/components/ContactSection";
 const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 
 
+const getData = async () => {
+  try{
+    const response = await fetch("")
+  }
+}
+
 export default function Home() {
 
   return (
     <main className={`${chivo_mono.className} transition-all`}>
+
       <HeroSection />
       <AboutSection />
       <SkillsSection />
