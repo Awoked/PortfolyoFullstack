@@ -18,6 +18,8 @@ const authOptions: NextAuthOptions = {
                 },
             },
             async authorize(credentials, req) {
+                console.log('process.env.NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET )
+
                 const user = await prisma.user.findUnique({
                     where: {
                         userName: credentials?.userName,
