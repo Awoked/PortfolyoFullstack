@@ -23,6 +23,7 @@ export default withAuth(
             authorized({ req, token }) {
                 
                 if (!req.url.includes("/api")) {
+                    console.log('token', token)
                     return token?.role === "admin"
                 }
 
