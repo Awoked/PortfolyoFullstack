@@ -9,7 +9,7 @@ import DrawingsSection from "@/app/components/DrawingsSection";
 import ContactSection from "@/app/components/ContactSection";
 
 const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
-
+export const dynamic = "force-dynamic";
 
 const getData = async () => {
   try {
