@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 
 import { AiFillGithub } from "react-icons/ai";
 import Link from 'next/link';
-import Preloader from '@/components/Preloader';
+// import Preloader from '@/components/Preloader';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
 
 
     return (
         <>
-            <Preloader />
+            {/* <Preloader /> */}
             {children}
             <footer className={`py-8 border-t footer-background text-black`}>
 
