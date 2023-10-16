@@ -13,9 +13,9 @@ export const dynamic = "force-dynamic";
 
 const getData = async () => {
   try {
-    console.log('process.env.API_BASE_URL ', process.env.API_BASE_URL  )
+    console.log('process.env.API_BASE_URL ', process.env.API_BASE_URL)
     const response = await fetch(`${process.env.API_BASE_URL}/sections`, {
-      next:{
+      next: {
         revalidate: 0
       }
     });
@@ -25,7 +25,10 @@ const getData = async () => {
     return data;
   } catch (error) {
     console.log('error', error)
-    return error
+    return {
+      error,
+      env: process.env.API_BASE_URL
+    }
   }
 }
 
