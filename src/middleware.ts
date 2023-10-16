@@ -21,12 +21,12 @@ export default withAuth(
     {
         callbacks: {
             authorized({ req, token }) {
-
-                // if (!req.nextUrl.pathname("/api")) {
+                
+                if (!req.url.includes("/api")) {
                     return token?.role === "admin"
-                // }
+                }
 
-                // return true;
+                return true;
             },
         }
     }
