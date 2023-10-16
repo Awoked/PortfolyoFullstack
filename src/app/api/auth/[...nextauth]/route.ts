@@ -61,7 +61,7 @@ const authOptions: NextAuthOptions = {
         strategy: 'jwt',
         maxAge: 30 * 24 * 60 * 60,
     },
-    secret: process.env.NEXAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     theme: {
         colorScheme: "light",
         buttonText: "asd",
