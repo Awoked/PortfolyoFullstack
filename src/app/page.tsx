@@ -12,16 +12,24 @@ const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 
 
 const getData = async () => {
-  try{
-    const response = await fetch("")
+  try {
+    const response = await fetch(`${process.env.API_BASE_URL}/sections`);
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('error', error)
   }
 }
 
-export default function Home() {
+export default async function Home() {
+
+
+  const myData = await getData();
 
   return (
     <main className={`${chivo_mono.className} transition-all`}>
-
+      {JSON.stringify(myData)}
       <HeroSection />
       <AboutSection />
       <SkillsSection />
