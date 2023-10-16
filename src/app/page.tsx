@@ -21,9 +21,11 @@ const getData = async () => {
     });
 
     const data = await response.json();
+    console.log('data', data)
     return data;
   } catch (error) {
     console.log('error', error)
+    return error
   }
 }
 
@@ -31,7 +33,7 @@ export default async function Home() {
 
 
   const myData = await getData();
-
+  console.log('myData', myData)
   return (
     <main className={`${chivo_mono.className} transition-all`}>
       {JSON.stringify(myData)}
