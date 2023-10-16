@@ -13,7 +13,12 @@ const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 
 const getData = async () => {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/sections`);
+    console.log('process.env.API_BASE_URL ', process.env.API_BASE_URL  )
+    const response = await fetch(`${process.env.API_BASE_URL}/sections`, {
+      next:{
+        revalidate: 0
+      }
+    });
 
     const data = await response.json();
     return data;
