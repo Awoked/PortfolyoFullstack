@@ -21,9 +21,9 @@ export default withAuth(
     {
         callbacks: {
             authorized({ req, token }) {
+                console.log('token', token)
                 
                 if (!req.url.includes("/api")) {
-                    console.log('token', token)
                     return token?.role === "admin"
                 }
 
