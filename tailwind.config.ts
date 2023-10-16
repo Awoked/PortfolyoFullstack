@@ -19,7 +19,7 @@ const config: Config = {
         },
       },
       container: {
-        padding: "2rem",
+        padding: "1.5rem",
         center: true,
       },
     },

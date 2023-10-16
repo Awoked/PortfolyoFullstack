@@ -3,6 +3,27 @@
 @tailwind utilities;
 
 
+html{
+  font-size: 84%;
+}
+
+@media (min-width:512px) {
+  html{
+    font-size: 86%;
+  }
+}
+
+@media (min-width:768px) {
+  html{
+    font-size: 90%;
+  }
+}
+
+@media (min-width:1600px) {
+  html{
+    font-size: 100%;
+  }
+}
 
 .section-title{
   @apply flex justify-center py-2;
@@ -13,11 +34,6 @@
 
 .link-v1{
   @apply font-semibold text-blue-700 hover:text-blue-400 transition-colors;
-}
-
-.react-images__view-image {
-  margin: 0 auto;
-  padding: 20px 0;
 }
 
 

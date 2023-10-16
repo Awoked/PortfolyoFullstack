@@ -34,9 +34,9 @@ model SectionData {
 }
 
 model Gallery {
-  id        Int         @id @default(autoincrement())
-  gallery   SectionData @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  sectionId Int
-  linkHref  String
-  title     String?
+  id            Int         @id @default(autoincrement())
+  gallery       SectionData @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId     Int
+  imageLinkHref String
+  imageTitle    String?
 }

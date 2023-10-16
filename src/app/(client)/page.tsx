@@ -12,7 +12,6 @@ const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 
 const getData = async () => {
   try {
-    console.log('process.env.API_BASE_URL ', process.env.API_BASE_URL)
     const response = await fetch(`${process.env.API_BASE_URL}/sections`, {
       next: {
         revalidate: 0
@@ -20,22 +19,18 @@ const getData = async () => {
     });
 
     const data = await response.json();
-    console.log('data', data)
     return data;
   } catch (error) {
     console.log('error', error)
     return {
       error,
-      env: process.env.API_BASE_URL
     }
   }
 }
 
 export default async function Home() {
 
-
   const myData = await getData();
-  console.log('myData', myData)
   return (
     <main className={`${chivo_mono.className} transition-all`}>
       {JSON.stringify(myData)}

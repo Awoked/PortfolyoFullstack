@@ -6,6 +6,7 @@ import { Bounce, Circ, Elastic, Expo, Power3, Power4, gsap } from 'gsap';
 import { BsCaretDown } from "react-icons/bs";
 import styles from "./hero.module.css";
 import Image from 'next/image';
+import { signIn } from 'next-auth/react';
 
 const HeroSection = () => {
 
@@ -63,7 +64,6 @@ const HeroSection = () => {
             <section
                 className={`hero-section p-6 max-md:py-14 md:p-12 xl:p-24 relative h-[100svh] overflow-hidden text-black ${styles.background}`}
             >
-
                 <div className="flex justify-between flex-col lg:flex-row h-full">
 
                     <div className='w-max'>
