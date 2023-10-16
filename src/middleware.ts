@@ -6,7 +6,7 @@ export default withAuth(
     async function middleware(req) {
         const role = req.nextauth.token?.role;
 
-        if (req.url.includes("/api") && role && process.env.NODE_ENV === "production") {
+        if (req.url.includes("/api") && role) {
             if (
                 role !== "admin" &&
                 req.method === "POST" ||
