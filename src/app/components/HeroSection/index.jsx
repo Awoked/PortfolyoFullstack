@@ -7,7 +7,6 @@ import { BsCaretDown } from "react-icons/bs";
 import styles from "./hero.module.css";
 import Image from 'next/image';
 import { signIn, useSession } from 'next-auth/react';
-
 const HeroSection = () => {
 
     // First Load Animations
