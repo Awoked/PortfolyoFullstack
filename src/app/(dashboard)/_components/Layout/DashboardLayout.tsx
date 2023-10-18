@@ -25,7 +25,7 @@ type ComponentType = {
 const DashboardLayout = ({ children }: ComponentType) => {
     return (
         <>
-            <div className={`${poppins.className} flex h-screen`}>
+            <div className={`${poppins.className} flex h-screen overflow-hidden`}>
                 <SideBar />
                 <main className='h-full bg-dashboard-background flex-1 overflow-y-auto'>
                     {children}

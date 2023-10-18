@@ -9,7 +9,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import ProjectCard from './ProjectCard';
 import { Expo, Power4, gsap } from 'gsap';
-import { useSnapshot } from 'valtio';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { Navigation } from 'swiper/modules';
 
