@@ -1,5 +1,4 @@
 import { Chivo_Mono } from 'next/font/google';
-import Head from 'next/head';
 
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
