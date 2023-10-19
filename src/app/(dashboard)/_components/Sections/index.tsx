@@ -1,11 +1,7 @@
-"use client"
-import React from 'react'
 import SectionsForm from './SectionsForm'
+import { DataTable } from './SectionsTable'
 
-const Sections = () => {
-    return (
-        <SectionsForm />
-    )
+export {
+    SectionsForm,
+    DataTable
 }
-
-export default Sections

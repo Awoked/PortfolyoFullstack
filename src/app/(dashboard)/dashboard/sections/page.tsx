@@ -1,13 +1,19 @@
 
 import React from 'react'
-import Sections from '../../_components/Sections'
+import { DataTable } from '../../_components/Sections'
+import { Sections } from '@/services/api'
+import Breadcrumb from '@/components/ui/breadcrumb';
 
-const page = () => {
+
+const page = async () => {
+  const sectionData = await Sections.GET();
+
+
 
   return (
     <section>
       <div className="container">
-        <Sections />
+        <DataTable data={sectionData} />
       </div>
     </section>
   )

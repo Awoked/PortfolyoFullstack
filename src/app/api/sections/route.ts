@@ -8,16 +8,44 @@ type SectionDataType = {
 }
 
 export async function GET(req: NextRequest) {
+    const { searchParams } = new URL(req.url);
+    const _id = searchParams.get("id");
+    const _section = searchParams.get("section");
+    
     try {
+
+        if (_id) {
+            const sectionData = await prisma.sectionData.findUnique({
+                where: {
+                    id: Number(_id)
+                },
+                include: {
+                    Gallery: true
+                }
+            })
+            return NextResponse.json(sectionData, { status: 200 });
+        }
+
+        if (_section) {
+            const sectionData = await prisma.sectionData.findUnique({
+                where: {
+                    section: _section
+                },
+                include: {
+                    Gallery: true
+                }
+            })
+
+            return NextResponse.json(sectionData, { status: 200 });
+        }
+
         const sectionData = await prisma.sectionData.findMany({
             include: {
                 Gallery: true
             }
         })
-        await prisma.$disconnect();
 
         return NextResponse.json(sectionData, { status: 200 });
-
     } catch (error) {
 
         return NextResponse.json({
@@ -45,7 +73,6 @@ export async function POST(req: NextRequest) {
                 Gallery: true
             }
         })
-        await prisma.$disconnect();
 
         return NextResponse.json({
             section
@@ -86,7 +113,6 @@ export async function PUT(req: NextRequest) {
                 Gallery: true
             }
         })
-        await prisma.$disconnect();
 
         return NextResponse.json({
             section
@@ -104,28 +130,27 @@ export async function PUT(req: NextRequest) {
 
 }
 
-export async function DELETE(req:NextRequest) {
-    const {searchParams} = new URL(req.url);
+export async function DELETE(req: NextRequest) {
+    const { searchParams } = new URL(req.url);
     const _id = searchParams.get("id");
-    
-    try{
+
+    try {
         const section = await prisma.sectionData.delete({
             where: {
                 id: Number(_id)
             }
         })
-        await prisma.$disconnect();
 
         return NextResponse.json({
             section
-        },{
+        }, {
             status: 200
         })
-    } catch(error){
+    } catch (error) {
 
         return NextResponse.json({
             error
-        },{
+        }, {
             status: 500
         })
     }

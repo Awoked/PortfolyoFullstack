@@ -32,7 +32,9 @@ export default async function Home() {
   const myData = await getData();
   return (
     <main className={`${chivo_mono.className} transition-all`}>
-      {JSON.stringify(myData)}
+      <pre>
+        {JSON.stringify(myData, null, 2)}
+      </pre>
       <HeroSection />
       <AboutSection />
       <SkillsSection />

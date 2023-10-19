@@ -4,6 +4,7 @@ import SideBar from './SideBar'
 
 import { Poppins } from 'next/font/google'
 import { Toaster } from '@/components/ui/toaster'
+import Breadcrumb from '@/components/ui/breadcrumb'
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -30,6 +31,9 @@ const DashboardLayout = ({ children }: ComponentType) => {
             <div className={`${poppins.className} flex h-screen overflow-hidden`}>
                 <SideBar />
                 <main className='h-full bg-dashboard-background flex-1 overflow-y-auto'>
+                    <div className="container py-6">
+                        <Breadcrumb />
+                    </div>
                     {children}
                 </main>
             </div>

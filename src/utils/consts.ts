@@ -1,8 +1,15 @@
 const RootUrls = {
     Dashboard: {
         title: "Dashboard",
-        url: "/dashboard"
+        url: "/dashboard",
+        SubPages:{
+            Sections: {
+                title: "Sections",
+                url: "/dashboard/sections"
+            }
+        }
     },
+    
     Home: {
         title: "Home",
         url: "/"

@@ -1,48 +1,47 @@
+"use client"
 import React from 'react'
 import { SectionData } from '@prisma/client'
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
-import { toast, useToast } from '@/components/ui/use-toast'
+import { useToast } from '@/components/ui/use-toast'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Sections } from '@/services/api'
 
-type initialValuesType = Omit<SectionData, "id">
 
-const SectionsForm = () => {
+type PropTypes = {
+    initialData: SectionData
+    method?: 'create' | 'update'
+}
+
+const SectionsForm = ({ initialData, method }: PropTypes) => {
     const { toast } = useToast();
 
-    const initialValues: initialValuesType = {
-        section: '',
-        content: '',
-        description: '',
-        firstLinkHref: '',
-        firstLinkText: '',
-        secondLinkHref: '',
-        secondLinkText: '',
-        subTitle: '',
-        title: '',
-    }
+    const initialValues = initialData
 
-    const handleFormSubmit = (
-        values: initialValuesType,
-        actions: FormikHelpers<initialValuesType>
+    const handleFormSubmit = async (
+        values: SectionData,
+        actions: FormikHelpers<SectionData>
     ) => {
         actions.setSubmitting(true);
-        setTimeout(() => {
-            toast({
-                title: "Success",
-                description: `${values.section} Saved!`,
-                className: "bg-green-600 text-white"
-            })
-            actions.setSubmitting(false);
 
-        }, 500);
+        if (method === "create") {
+            const data = await Sections.POST({ client: true }, values)
+        }
+        if (method === "update") {
+            const data = await Sections.PUT({ client: true }, values)
+        }
+
+        toast({
+            title: "Success",
+            description: `${values.section} section ${method === "create" ? "Created": "Saved"}!`,
+            className: "bg-green-600 text-white"
+        })
+        actions.setSubmitting(false);
+
     }
 
-    const handleValidate = (values: initialValuesType) => {
-        let keys = Object.keys(initialValues);
-
-        const errors: Partial<Record<keyof initialValuesType, string>> = {}
-
+    const handleValidate = (values: SectionData) => {
+        const errors: Partial<Record<keyof SectionData, string>> = {}
 
         if (!values.section) {
             errors.section = "Bu alan zorunludur"
@@ -65,7 +64,12 @@ const SectionsForm = () => {
                                     className='flex flex-col gap-1 mb-4'
                                     key={index}
                                 >
-                                    <Field name={key} as={Input} placeholder={key} />
+                                    <Field
+                                        name={key}
+                                        as={Input}
+                                        placeholder={key}
+                                        disabled={key === "id"}
+                                    />
                                     <span className='text-destructive'>
                                         <ErrorMessage className='bg-red-200' name={key} />
                                     </span>
