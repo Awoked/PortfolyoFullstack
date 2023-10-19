@@ -1,8 +1,15 @@
+
 import React from 'react'
+import Sections from '../../_components/Sections'
 
 const page = () => {
+
   return (
-    <div>Sections</div>
+    <section>
+      <div className="container">
+        <Sections />
+      </div>
+    </section>
   )
 }
 

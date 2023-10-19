@@ -35,7 +35,7 @@ const SideBar = () => {
 
                             <AccordionItem value="item-1" className='border-b-0'>
                                 <AccordionTrigger className='flex-row-reverse justify-end gap-2'>
-                                    Pages
+                                    Client
                                 </AccordionTrigger>
 
                                 <AccordionContent className='pl-4'>

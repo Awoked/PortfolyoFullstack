@@ -3,6 +3,7 @@ import React from 'react'
 import SideBar from './SideBar'
 
 import { Poppins } from 'next/font/google'
+import { Toaster } from '@/components/ui/toaster'
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -25,6 +26,7 @@ type ComponentType = {
 const DashboardLayout = ({ children }: ComponentType) => {
     return (
         <>
+            <Toaster />
             <div className={`${poppins.className} flex h-screen overflow-hidden`}>
                 <SideBar />
                 <main className='h-full bg-dashboard-background flex-1 overflow-y-auto'>
