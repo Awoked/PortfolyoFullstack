@@ -21,8 +21,9 @@ const Sections: MethodTypes = {
                     revalidate: 0
                 }
             });
-
+            console.log('response.status', response.status)
             const data: SectionData[] | SectionData = await response.json();
+            console.log('data', data)
             return data;
         } catch (_e: any) {
             let e: Error = _e;

@@ -30,14 +30,11 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
         if (method === "update") {
             const data = await Sections.PUT({ client: true }, values)
         }
-
         toast({
             title: "Success",
-            description: `${values.section} section ${method === "create" ? "Created": "Saved"}!`,
-            className: "bg-green-600 text-white"
+            description: `${values.section} section ${method === "create" ? "Created" : "Saved"}!`,
         })
         actions.setSubmitting(false);
-
     }
 
     const handleValidate = (values: SectionData) => {

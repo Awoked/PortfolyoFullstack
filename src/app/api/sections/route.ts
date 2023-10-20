@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
         })
 
         return NextResponse.json({
-            section
+            ...section
         }, {
             status: 201
         });
@@ -115,7 +115,7 @@ export async function PUT(req: NextRequest) {
         })
 
         return NextResponse.json({
-            section
+            ...section
         }, {
             status: 200
         })
@@ -142,7 +142,8 @@ export async function DELETE(req: NextRequest) {
         })
 
         return NextResponse.json({
-            section
+            ...section
+
         }, {
             status: 200
         })

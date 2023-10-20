@@ -23,6 +23,7 @@ type PropsType = {
     data: SectionData[]
 };
 export function DataTable({ data }: PropsType) {
+    
     const { toast } = useToast();
     const handleDelete = async (id: number) => {
         try {

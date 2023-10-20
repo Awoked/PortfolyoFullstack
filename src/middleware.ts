@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
     async function middleware(req) {
-        const role = req.nextauth.token?.role;
-           
+        // const role = req.nextauth.token?.role;
+
         // if (req.url.includes("/api") && role) {
         //     if (
         //         role !== "admin" &&
@@ -22,11 +22,10 @@ export default withAuth(
     {
         callbacks: {
             authorized({ req, token }) {
-                if (!req.url.includes("/api")) {
+                if (req.nextUrl.pathname.includes("/api") && req.method !== "GET" || req.nextUrl.pathname.includes("/dashboard") ) {
                     return token?.role === "admin"
                 }
-
-                return true;
+                return true
             },
         },
         secret: process.env.NEXTAUTH_SECRET,
