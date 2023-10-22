@@ -18,12 +18,13 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Sections } from "@/services/api";
 import { useToast } from "@/components/ui/use-toast";
+import { PrismaClientInitializationError } from "@prisma/client/runtime/library";
 
 type PropsType = {
     data: SectionData[]
 };
 export function DataTable({ data }: PropsType) {
-    
+
     const { toast } = useToast();
     const handleDelete = async (id: number) => {
         try {
@@ -38,6 +39,7 @@ export function DataTable({ data }: PropsType) {
             })
         }
     }
+
 
     return (
         <>

@@ -21,10 +21,13 @@ export default withAuth(
     },
     {
         callbacks: {
-            authorized({ req, token }) {
+            authorized({ req, token}) {
+                console.log('token', token)
+
                 if (req.nextUrl.pathname.includes("/api") && req.method !== "GET" || req.nextUrl.pathname.includes("/dashboard") ) {
                     return token?.role === "admin"
                 }
+
                 return true
             },
         },
