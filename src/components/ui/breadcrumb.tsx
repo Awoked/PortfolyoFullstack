@@ -5,8 +5,8 @@ import React from 'react'
 
 const Breadcrumb = () => {
     const paths = usePathname()
-    console.log('paths', paths)
     const pathNames = paths.split('/').filter(path => path)
+    
     return (
         <div>
             <ul className='flex gap-4 items-center'>
