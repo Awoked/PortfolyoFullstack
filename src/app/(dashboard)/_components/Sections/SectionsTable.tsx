@@ -50,6 +50,7 @@ export function DataTable({ data }: PropsType) {
             </SectionTitle>
             <div className="flex flex-col gap-y-4">
                 {
+                    data.length &&
                     data?.map((data, index) => (
                         <div className="flex justify-between items-center p-4 border border-primary rounded-md" key={index}>
                             <p className="font-bold text-xl">
