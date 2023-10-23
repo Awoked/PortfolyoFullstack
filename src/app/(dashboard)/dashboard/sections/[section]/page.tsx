@@ -1,9 +1,9 @@
-import { Sections } from '@/services/api'
+import { SectionService } from '@/services/api'
 import React from 'react'
 import { redirect } from "next/navigation"
 import { RootUrls } from '@/utils/consts'
 import { SectionsForm } from '@/app/(dashboard)/_components/Sections'
-import { SectionData } from '@prisma/client'
+import { Gallery, SectionData } from '@prisma/client'
 
 type PageProps = {
     params: {
@@ -11,27 +11,48 @@ type PageProps = {
     }
 }
 
+export interface ISectionData {
+    SectionData: SectionData
+    GalleryData?: Gallery[]
+}
+
 const page = async ({ params }: PageProps) => {
+    const sectionService = new SectionService();
     const { section } = params;
 
     const isCreatePage = section === "create"
 
-    let initialData: SectionData;
+    let initialData: ISectionData;
     if (isCreatePage) {
         initialData = {
-            id: 0,
-            section: '',
-            subTitle: '',
-            title: '',
-            description: '',
-            content: '',
-            firstLinkHref: '',
-            firstLinkText: '',
-            secondLinkHref: '',
-            secondLinkText: '',
+            SectionData: {
+                id: 0,
+                section: '',
+                subTitle: '',
+                title: '',
+                description: '',
+                content: '',
+                firstLinkHref: '',
+                firstLinkText: '',
+                secondLinkHref: '',
+                secondLinkText: '',
+            },
+            GalleryData: [
+                {
+                    id: 0,
+                    imageLinkHref: '',
+                    imageTitle: '',
+                    sectionId: 0
+                }
+            ]
         }
     } else {
-        initialData = await Sections.GET({ section: section });
+        const SectionsData =await sectionService.getAll(); 
+        initialData = {
+            SectionData: SectionsData,
+            GalleryData: SectionsData.Gallery
+        }
+
 
         if (!initialData) {
             redirect(RootUrls.Dashboard.SubPages.Sections.url)

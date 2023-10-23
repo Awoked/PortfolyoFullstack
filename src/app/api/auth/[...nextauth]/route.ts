@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentailsProvider from "next-auth/providers/credentials";
-import prisma from "../../../../../prisma/client";
+import prisma from "@/lib/db";
 
 const authOptions: NextAuthOptions = {
     providers: [

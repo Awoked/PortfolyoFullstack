@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../../prisma/client";
+import prisma from "@/lib/db";
 import { User } from "@prisma/client";
 import { AdminKey } from "@/utils/consts";
 

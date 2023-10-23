@@ -1,93 +1,95 @@
-import { SectionData } from "@prisma/client"
+import { SectionDataType } from "@/app/api/sections/route";
+import { Gallery, SectionData } from "@prisma/client"
 
-type OptionTypes = {
-    id?: number | string;
-    section?: string;
-    client?: boolean;
-} | undefined | null
 
-type MethodTypes = {
-    GET: (params?: OptionTypes) => Promise<any>
-    POST: (params?: OptionTypes, data?: SectionData) => Promise<any>
-    PUT: (params?: OptionTypes, data?: SectionData) => Promise<any>
-    DELETE: (params?: OptionTypes) => Promise<any>
+
+export interface IServiceOptions {
+    isServer: boolean
 }
 
-const Sections: MethodTypes = {
-    async GET(params) {
-        try {
-            const response = await fetch(`${!params?.client ? process.env.API_BASE_URL : '/api'}/sections${params?.section ? `?section=${params.section}` : ''}`, {
-                next: {
-                    revalidate: 0
-                }
-            });
-            const data: SectionData[] | SectionData = await response.json();
-            return data;
-        } catch (_e: any) {
-            let e: Error = _e;
-            console.log('e', e)
-            return null
+
+class SectionService {
+    public isServer: boolean = true;
+    private apiURL = this.isServer ? process.env.API_BASE_URL : "";
+    private endpoint = '/sections';
+
+    private fullReqURL = this.apiURL + this.endpoint;
+
+    constructor(serviceOptions?: IServiceOptions) {
+        if (serviceOptions) {
+            this.isServer = serviceOptions?.isServer;
         }
-    },
-    async POST(params, _data) {
-        try {
-            const response = await fetch(`${!params?.client ? process.env.API_BASE_URL : '/api'}/sections`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
+    }
+
+    async getAll() {
+        const response = await fetch(this.fullReqURL, {
+            next: {
+                revalidate: 10
+            }
+        });
+        return await response.json();
+    }
+
+    async getByID(_id: number | string) {
+        const response = await fetch(this.fullReqURL + `?id=${_id}`, {
+            next: {
+                revalidate: 10
+            }
+        });
+        return await response.json();
+    }
+
+    async getBySection(_section: string) {
+        const response = await fetch(this.fullReqURL + `?section=${_section}`, {
+            next: {
+                revalidate: 10
+            }
+        });
+        return await response.json();
+    }
+
+    async createSection(body: SectionDataType) {
+        const { SectionData, GalleryData } = body;
+        const response = await fetch(this.fullReqURL, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                SectionData: {
+                    ...SectionData,
+                    id: undefined
                 },
-                body: JSON.stringify({
-                    SectionData: {
-                        ..._data,
-                        id: undefined
-                    }
-                })
-            });
+                GalleryData: GalleryData
+            })
+        })
+        return await response.json();
+    }
 
-            const data = await response.json();
-            return data;
-        } catch (_e: any) {
-            let e: Error = _e;
-            console.log('e', e)
-            return null
-        }
-    },
-    async PUT(params, _data) {
-        try {
-            const response = await fetch(`${!params?.client ? process.env.API_BASE_URL : '/api'}/sections`, {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
+    async updateSection(body: SectionDataType) {
+        const { GalleryData, SectionData } = body;
+        const response = await fetch(this.fullReqURL, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                SectionData: {
+                    ...SectionData,
+                    id: undefined
                 },
-                body: JSON.stringify({ SectionData: _data })
-            });
+                GalleryData: GalleryData
+            })
+        })
+        return await response.json();
+    }
 
-            const data = await response.json();
-            return data;
-        } catch (_e: any) {
-            let e: Error = _e;
-            console.log('e', e)
-            return null
-        }
-    },
-    async DELETE(params) {
-        try {
-            const response = await fetch(`${!params?.client ? process.env.API_BASE_URL : '/api'}/sections${params?.id ? `?id=${params.id}` : '/'}`, {
-                method: "DELETE"
-            });
-
-            const data = await response.json();
-            return data;
-        } catch (_e: any) {
-            let e: Error = _e;
-            console.log('e', e)
-            return null
-        }
-
+    async deleteSectionById(id: string | number) {
+        const response = await fetch(this.fullReqURL + `?id=${id}`);
+        return await response.json();
     }
 }
 
-
 export {
-    Sections
+    SectionService
 }

@@ -1,11 +1,12 @@
 
 import React from 'react'
 import { DataTable } from '../../_components/Sections'
-import { Sections } from '@/services/api'
+import { SectionService } from '@/services/api'
 
 
 const page = async () => {
-  const sectionData = await Sections.GET();
+  const sectionService = new SectionService();
+  const sectionData = await sectionService.getAll();
 
 
 

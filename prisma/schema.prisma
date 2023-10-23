@@ -6,9 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("DATABASE_URL")
-  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -40,4 +39,6 @@ model Gallery {
   sectionId     Int
   imageLinkHref String
   imageTitle    String?
+
+  @@index([sectionId])
 }

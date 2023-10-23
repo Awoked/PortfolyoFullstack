@@ -5,46 +5,56 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { useToast } from '@/components/ui/use-toast'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Sections } from '@/services/api'
+import { SectionService } from '@/services/api'
+import { ISectionData } from '../../dashboard/sections/[section]/page'
 
 
 type PropTypes = {
-    initialData: SectionData
+    initialData: ISectionData
     method?: 'create' | 'update'
 }
 
 const SectionsForm = ({ initialData, method }: PropTypes) => {
+    const sectionService = new SectionService({ isServer: false });
     const { toast } = useToast();
 
     const initialValues = initialData
 
     const handleFormSubmit = async (
-        values: SectionData,
+        values: ISectionData,
         actions: FormikHelpers<SectionData>
     ) => {
         actions.setSubmitting(true);
 
         if (method === "create") {
-            const data = await Sections.POST({ client: true }, values)
+            const data = await sectionService.createSection({
+                SectionData: values.SectionData,
+                GalleryData: values.GalleryData
+            })
         }
         if (method === "update") {
-            const data = await Sections.PUT({ client: true }, values)
+            const data = await sectionService.updateSection({
+                SectionData: values.SectionData,
+                GalleryData: values.GalleryData
+            })
         }
+
         toast({
             title: "Success",
-            description: `${values.section} section ${method === "create" ? "Created" : "Saved"}!`,
+            description: `${values.SectionData.section} section ${method === "create" ? "Created" : "Saved"}!`,
         })
         actions.setSubmitting(false);
     }
 
-    const handleValidate = (values: SectionData) => {
+    const handleValidate = (values: ISectionData) => {
         const errors: Partial<Record<keyof SectionData, string>> = {}
 
-        if (!values.section) {
+        if (!values.SectionData.section) {
             errors.section = "Bu alan zorunludur"
         }
         return errors
     }
+
 
     return (
         <Formik
@@ -56,22 +66,40 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                 <>
                     <Form>
                         {
-                            Object.keys(initialValues).map((key, index) => (
-                                <div
-                                    className='flex flex-col gap-1 mb-4'
-                                    key={index}
-                                >
+                            Object.keys(initialValues.SectionData).map((key, index) => {
+
+                                return (
+                                    <div
+                                        className='flex flex-col gap-1 mb-4'
+                                        key={index}
+                                    >
+                                        <Field
+                                            name={key}
+                                            as={Input}
+                                            placeholder={key}
+                                            disabled={key === "id"}
+                                        />
+                                        <span className='text-destructive'>
+                                            <ErrorMessage className='bg-red-200' name={key} />
+                                        </span>
+                                    </div>
+                                )
+                            })
+                        }
+
+                        {
+                            initialValues.GalleryData?.map((data, index) => (
+                                Object.keys(data).map((data, index) => (
+
                                     <Field
-                                        name={key}
+                                        name={data}
                                         as={Input}
-                                        placeholder={key}
-                                        disabled={key === "id"}
+                                        placeholder={data}
+                                        disabled={false}
                                     />
-                                    <span className='text-destructive'>
-                                        <ErrorMessage className='bg-red-200' name={key} />
-                                    </span>
-                                </div>
+                                ))
                             ))
+
                         }
 
                         <Button type='submit' disabled={isSubmitting}>

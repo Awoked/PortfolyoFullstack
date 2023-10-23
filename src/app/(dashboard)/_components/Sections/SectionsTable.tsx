@@ -16,19 +16,19 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Sections } from "@/services/api";
+import { SectionService } from "@/services/api";
 import { useToast } from "@/components/ui/use-toast";
-import { PrismaClientInitializationError } from "@prisma/client/runtime/library";
 
 type PropsType = {
     data: SectionData[]
 };
 export function DataTable({ data }: PropsType) {
+    const sectionService = new SectionService({ isServer: false });
 
     const { toast } = useToast();
     const handleDelete = async (id: number) => {
         try {
-            const data: { section: SectionData } = await Sections.DELETE({ id, client: true })
+            const data: { section: SectionData } = await sectionService.deleteSectionById(id);
             toast({
                 title: "Deleted",
                 description: data.section.section

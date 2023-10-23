@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../prisma/client";
+import prisma from "@/lib/db";
 import { Gallery, SectionData } from "@prisma/client";
 
-type SectionDataType = {
+export type SectionDataType = {
     SectionData: SectionData;
-    GalleryData: Gallery
+    GalleryData?: Gallery[]
 }
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const _id = searchParams.get("id");
     const _section = searchParams.get("section");
-    
+
     try {
 
         if (_id) {
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json(sectionData, { status: 200 });
     } catch (error) {
-console.log('error', error)
+        console.log('error', error)
         return NextResponse.json({
             error
         }, {
@@ -95,17 +95,7 @@ export async function PUT(req: NextRequest) {
 
     try {
         const section = await prisma.sectionData.update({
-            data: {
-                ...body.SectionData,
-                Gallery: body.GalleryData ? {
-                    update: {
-                        where: {
-                            id: body.GalleryData.id
-                        },
-                        data: body.GalleryData
-                    }
-                } : undefined
-            },
+            data: body.SectionData,
             where: {
                 id: body.SectionData.id,
             },
