@@ -31,8 +31,11 @@ const Pages = {
     ]
 }
 
+const AdminKey = "SJDHQWJKFHQWJKGHQJAGSKQJWGQWG";
+
 
 export {
     RootUrls,
-    Pages
+    Pages,
+    AdminKey
 }
