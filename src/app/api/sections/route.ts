@@ -108,16 +108,37 @@ export async function PUT(req: NextRequest) {
 
         if (body.GalleryData) {
             body.GalleryData.forEach(async (data, index) => {
-                const galleryData = await prisma.gallery.update({
-                    data: {
-                        ...data,
-                        id: undefined,
-                        sectionId: undefined
-                    },
-                    where:{
+
+                const existingGallery = await prisma.gallery.findUnique({
+                    where: {
                         id: data.id
                     }
                 })
+
+                if (existingGallery) {
+                    const updatedGallery = await prisma.gallery.update({
+                        data: {
+                            ...data,
+                            id: undefined,
+                            sectionId: undefined,
+                        },
+
+                        where: {
+                            id: data.id
+                        }
+                    })
+                } else {
+                    const createdGallery = await prisma.gallery.create({
+                        data: {
+                            ...data,
+                            id: undefined,
+                            sectionId: body.SectionData.id,
+                        }
+                    })
+
+                }
+
+
             })
         }
 

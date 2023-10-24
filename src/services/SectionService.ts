@@ -1,11 +1,7 @@
 import { SectionDataType } from "@/app/api/sections/route";
-import { Gallery, SectionData } from "@prisma/client"
+import { IServiceOptions } from ".";
 
 
-
-export interface IServiceOptions {
-    isServer: boolean
-}
 
 
 class SectionService {
@@ -66,7 +62,7 @@ class SectionService {
                 GalleryData: GalleryData
             })
         })
-        
+
         return await response.json();
     }
 
@@ -95,6 +91,4 @@ class SectionService {
     }
 }
 
-export {
-    SectionService
-}
+export default SectionService

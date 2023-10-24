@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { DataTable } from '../../_components/Sections'
-import { SectionService } from '@/services/api'
+import { SectionService } from '@/services'
 
 
 const page = async () => {

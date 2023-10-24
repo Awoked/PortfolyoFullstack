@@ -6,7 +6,7 @@ import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import DrawingsSection from "@/components/DrawingsSection";
 import ContactSection from "@/components/ContactSection";
-import { SectionService } from '@/services/api';
+import { SectionService } from '@/services/SectionService';
 
 const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 

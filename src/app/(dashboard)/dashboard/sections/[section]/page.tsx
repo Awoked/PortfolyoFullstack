@@ -1,4 +1,4 @@
-import { SectionService } from '@/services/api'
+import { SectionService } from '@/services'
 import React from 'react'
 import { redirect } from "next/navigation"
 import { RootUrls } from '@/utils/consts'
