@@ -9,20 +9,24 @@ export interface IServiceOptions {
 
 
 class SectionService {
-    public isServer: boolean = true;
-    private apiURL = this.isServer ? process.env.API_BASE_URL : "";
-    private endpoint = '/sections';
+    public serviceOptions: IServiceOptions = {
+        isServer: true,
+    }
+    private _apiURL: string;
+    private _endpoint = '/sections';
+    private _fullReqURL: string;
 
-    private fullReqURL = this.apiURL + this.endpoint;
-
-    constructor(serviceOptions?: IServiceOptions) {
-        if (serviceOptions) {
-            this.isServer = serviceOptions?.isServer;
+    constructor(_serviceOptions?: IServiceOptions) {
+        if (_serviceOptions) {
+            this.serviceOptions = { ...this.serviceOptions, ..._serviceOptions };
         }
+
+        this._apiURL = this.serviceOptions.isServer ? process.env.API_BASE_URL as string : "/api";
+        this._fullReqURL = this._apiURL + this._endpoint;
     }
 
     async getAll() {
-        const response = await fetch(this.fullReqURL, {
+        const response = await fetch(this._fullReqURL, {
             next: {
                 revalidate: 10
             }
@@ -31,7 +35,7 @@ class SectionService {
     }
 
     async getByID(_id: number | string) {
-        const response = await fetch(this.fullReqURL + `?id=${_id}`, {
+        const response = await fetch(this._fullReqURL + `?id=${_id}`, {
             next: {
                 revalidate: 10
             }
@@ -40,7 +44,7 @@ class SectionService {
     }
 
     async getBySection(_section: string) {
-        const response = await fetch(this.fullReqURL + `?section=${_section}`, {
+        const response = await fetch(this._fullReqURL + `?section=${_section}`, {
             next: {
                 revalidate: 10
             }
@@ -50,25 +54,25 @@ class SectionService {
 
     async createSection(body: SectionDataType) {
         const { SectionData, GalleryData } = body;
-        const response = await fetch(this.fullReqURL, {
+        const response = await fetch(this._fullReqURL, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 SectionData: {
-                    ...SectionData,
-                    id: undefined
+                    ...SectionData
                 },
                 GalleryData: GalleryData
             })
         })
+        
         return await response.json();
     }
 
     async updateSection(body: SectionDataType) {
         const { GalleryData, SectionData } = body;
-        const response = await fetch(this.fullReqURL, {
+        const response = await fetch(this._fullReqURL, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -76,16 +80,17 @@ class SectionService {
             body: JSON.stringify({
                 SectionData: {
                     ...SectionData,
-                    id: undefined
                 },
                 GalleryData: GalleryData
             })
         })
+
         return await response.json();
+
     }
 
     async deleteSectionById(id: string | number) {
-        const response = await fetch(this.fullReqURL + `?id=${id}`);
+        const response = await fetch(this._fullReqURL + `?id=${id}`);
         return await response.json();
     }
 }

@@ -18,6 +18,7 @@ export interface ISectionData {
 
 const page = async ({ params }: PageProps) => {
     const sectionService = new SectionService();
+
     const { section } = params;
 
     const isCreatePage = section === "create"
@@ -47,12 +48,11 @@ const page = async ({ params }: PageProps) => {
             ]
         }
     } else {
-        const SectionsData =await sectionService.getAll(); 
+        const SectionData = await sectionService.getBySection(params.section);
         initialData = {
-            SectionData: SectionsData,
-            GalleryData: SectionsData.Gallery
+            SectionData: SectionData,
+            GalleryData: SectionData.Gallery
         }
-
 
         if (!initialData) {
             redirect(RootUrls.Dashboard.SubPages.Sections.url)

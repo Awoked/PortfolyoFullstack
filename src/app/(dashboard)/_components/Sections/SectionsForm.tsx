@@ -22,7 +22,7 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
 
     const handleFormSubmit = async (
         values: ISectionData,
-        actions: FormikHelpers<SectionData>
+        actions: FormikHelpers<ISectionData>
     ) => {
         actions.setSubmitting(true);
 
@@ -47,10 +47,17 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
     }
 
     const handleValidate = (values: ISectionData) => {
-        const errors: Partial<Record<keyof SectionData, string>> = {}
+        const errors: { SectionData?: Partial<Record<keyof SectionData, string>> } = {}
+
+        function setSectionError(key: keyof SectionData, error: string) {
+            errors.SectionData = {
+                ...errors.SectionData,
+                [key]: error,
+            }
+        }
 
         if (!values.SectionData.section) {
-            errors.section = "Bu alan zorunludur"
+            setSectionError("section", "Bu alan zorunludur")
         }
         return errors
     }
@@ -62,25 +69,26 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
             onSubmit={handleFormSubmit}
             validate={handleValidate}
         >
-            {({ isSubmitting, initialValues }) => (
+            {({ isSubmitting, initialValues, errors }) => (
                 <>
                     <Form>
                         {
                             Object.keys(initialValues.SectionData).map((key, index) => {
 
                                 return (
+                                    key !== "Gallery" &&
                                     <div
                                         className='flex flex-col gap-1 mb-4'
                                         key={index}
                                     >
                                         <Field
-                                            name={key}
+                                            name={`SectionData.${key}`}
                                             as={Input}
                                             placeholder={key}
                                             disabled={key === "id"}
                                         />
                                         <span className='text-destructive'>
-                                            <ErrorMessage className='bg-red-200' name={key} />
+                                            <ErrorMessage className='bg-red-200' name={`SectionData.${key}`} />
                                         </span>
                                     </div>
                                 )
@@ -89,18 +97,20 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
 
                         {
                             initialValues.GalleryData?.map((data, index) => (
-                                Object.keys(data).map((data, index) => (
+                                Object.keys(data).map((key, idx) => (
 
                                     <Field
-                                        name={data}
+                                        key={idx}
+                                        name={`GalleryData[${index}].${key}`}
                                         as={Input}
-                                        placeholder={data}
+                                        placeholder={key}
                                         disabled={false}
                                     />
                                 ))
                             ))
 
-                        }
+                            
+                        }   
 
                         <Button type='submit' disabled={isSubmitting}>
                             {isSubmitting ? "Kaydediliyor..." : "Kaydet"}

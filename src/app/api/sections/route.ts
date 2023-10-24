@@ -93,16 +93,33 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
     const body: SectionDataType = await req.json();
 
+
     try {
         const section = await prisma.sectionData.update({
-            data: body.SectionData,
+            data: {
+                ...body.SectionData,
+                Gallery: undefined,
+                id: undefined
+            },
             where: {
                 id: body.SectionData.id,
             },
-            include: {
-                Gallery: true
-            }
         })
+
+        if (body.GalleryData) {
+            body.GalleryData.forEach(async (data, index) => {
+                const galleryData = await prisma.gallery.update({
+                    data: {
+                        ...data,
+                        id: undefined,
+                        sectionId: undefined
+                    },
+                    where:{
+                        id: data.id
+                    }
+                })
+            })
+        }
 
         return NextResponse.json({
             ...section
