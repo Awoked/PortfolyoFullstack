@@ -16,19 +16,20 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { SectionService } from "@/services";
+import { sectionService } from "@/services";
 import { useToast } from "@/components/ui/use-toast";
 
 type PropsType = {
     data: SectionData[]
 };
 export function DataTable({ data }: PropsType) {
-    const sectionService = new SectionService({ isServer: false });
+    // const sectionService = new SectionService({ isServer: false });
 
     const { toast } = useToast();
     const handleDelete = async (id: number) => {
         try {
             const data: { section: SectionData } = await sectionService.deleteSectionById(id);
+            console.log('data', data)
             toast({
                 title: "Deleted",
                 description: data.section.section

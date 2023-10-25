@@ -1,4 +1,4 @@
-import { SectionService } from '@/services'
+import { sectionService } from '@/services'
 import React from 'react'
 import { redirect } from "next/navigation"
 import { RootUrls } from '@/utils/consts'
@@ -17,7 +17,7 @@ export interface ISectionData {
 }
 
 const page = async ({ params }: PageProps) => {
-    const sectionService = new SectionService();
+    // const sectionService = new SectionService();
 
     const { section } = params;
 

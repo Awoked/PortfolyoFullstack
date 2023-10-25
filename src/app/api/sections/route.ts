@@ -61,13 +61,24 @@ export async function POST(req: NextRequest) {
 
     const body: SectionDataType = await req.json();
 
+    const _GalleryData: Omit<Gallery, "id" | "sectionId">[] = [];
+    body.GalleryData?.forEach((data, _) => {
+        _GalleryData.push({
+            imageTitle: data.imageTitle,
+            imageLinkHref: data.imageLinkHref,
+        })
+    })
+
     try {
         const section = await prisma.sectionData.create({
             data: {
                 ...body.SectionData,
-                Gallery: {
-                    create: body.GalleryData ? body.GalleryData : undefined
-                }
+                id: undefined,
+                Gallery: body.GalleryData ? {
+                    createMany: {
+                        data: _GalleryData
+                    }
+                } : undefined
             },
             include: {
                 Gallery: true

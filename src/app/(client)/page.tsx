@@ -6,7 +6,7 @@ import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import DrawingsSection from "@/components/DrawingsSection";
 import ContactSection from "@/components/ContactSection";
-import { SectionService } from '@/services';
+import { sectionService } from '@/services';
 
 
 const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
@@ -14,7 +14,7 @@ const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 export default async function Home() {
   // const sectionService =  SectionService;
 
-  const SectionsData = await SectionService.getAll();
+  const SectionsData = await sectionService.getAll();
 
   return (
     <main className={`${chivo_mono.className} transition-all`}>

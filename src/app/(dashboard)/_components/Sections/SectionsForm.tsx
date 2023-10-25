@@ -5,7 +5,7 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { useToast } from '@/components/ui/use-toast'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { GalleryService, SectionService } from '@/services'
+import { galleryService, sectionService } from '@/services'
 import { ISectionData } from '../../dashboard/sections/[section]/page'
 
 
@@ -15,8 +15,8 @@ type PropTypes = {
 }
 
 const SectionsForm = ({ initialData, method }: PropTypes) => {
-    const sectionService = new SectionService({ isServer: false });
-    const galleryService = new GalleryService({ isServer: false });
+    // const sectionService = new SectionService({ isServer: false });
+    
 
     const { toast } = useToast();
 

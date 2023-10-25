@@ -1,34 +1,10 @@
 import { SectionDataType } from "@/app/api/sections/route";
 import { IServiceOptions } from ".";
+import { Service } from "./Service";
 
+class SectionService extends Service {
+    private _fullReqURL: string = this.getFullReq("/sections");
 
-
-
-class SectionService {
-    public serviceOptions: IServiceOptions = {
-        isServer: true,
-    }
-    private _apiURL: string;
-    private _endpoint = '/sections';
-    private _fullReqURL: string;
-
-    constructor(_serviceOptions?: IServiceOptions) {
-        if (_serviceOptions) {
-            this.serviceOptions = { ...this.serviceOptions, ..._serviceOptions };
-        }
-        try {
-            if (window) {
-                this._apiURL = "/api";
-            } else {
-                this._apiURL = process.env.API_BASE_URL as string;
-            }
-        } catch (err) {
-            this._apiURL = process.env.API_BASE_URL as string;
-        }
-
-        // this._apiURL = this.serviceOptions.isServer ? process.env.API_BASE_URL as string : "/api";
-        this._fullReqURL = this._apiURL + this._endpoint;
-    }
 
     async getAll() {
         const response = await fetch(this._fullReqURL, {
@@ -95,11 +71,12 @@ class SectionService {
     }
 
     async deleteSectionById(id: string | number) {
-        const response = await fetch(this._fullReqURL + `?id=${id}`);
+        const response = await fetch(this._fullReqURL + `?id=${id}`, {
+            method: "DELETE"
+        });
         return await response.json();
     }
 }
 
-const sectionService = new SectionService();
 
-export default sectionService 
+export default SectionService 
