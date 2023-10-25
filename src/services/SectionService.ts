@@ -16,8 +16,17 @@ class SectionService {
         if (_serviceOptions) {
             this.serviceOptions = { ...this.serviceOptions, ..._serviceOptions };
         }
+        try {
+            if (window) {
+                this._apiURL = "/api";
+            } else {
+                this._apiURL = process.env.API_BASE_URL as string;
+            }
+        } catch (err) {
+            this._apiURL = process.env.API_BASE_URL as string;
+        }
 
-        this._apiURL = this.serviceOptions.isServer ? process.env.API_BASE_URL as string : "/api";
+        // this._apiURL = this.serviceOptions.isServer ? process.env.API_BASE_URL as string : "/api";
         this._fullReqURL = this._apiURL + this._endpoint;
     }
 
@@ -91,4 +100,6 @@ class SectionService {
     }
 }
 
-export default SectionService
+const sectionService = new SectionService();
+
+export default sectionService 

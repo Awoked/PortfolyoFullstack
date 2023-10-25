@@ -5,7 +5,7 @@ class GalleryService {
         isServer: true,
     }
     private _apiURL: string;
-    private _endpoint = '/sections';
+    private _endpoint = '/gallery';
     private _fullReqURL: string;
 
     constructor(_serviceOptions?: IServiceOptions) {
@@ -17,26 +17,11 @@ class GalleryService {
         this._fullReqURL = this._apiURL + this._endpoint;
     }
 
-    async getAll() {
-        const response = await fetch(this._fullReqURL, {
-            next: {
-                revalidate: 10
-            }
+    async deleteById(id: string | number) {
+        const response = await fetch(this._fullReqURL + `?id=${id}`,{
+            method: "DELETE"
         });
-        return await response.json();
-    }
-
-    async getByID(_id: number | string) {
-        const response = await fetch(this._fullReqURL + `?id=${_id}`, {
-            next: {
-                revalidate: 10
-            }
-        });
-        return await response.json();
-    }
-
-    async deleteSectionById(id: string | number) {
-        const response = await fetch(this._fullReqURL + `?id=${id}`);
+        if (response.status !== 200) throw new Error("error")
         return await response.json();
     }
 }

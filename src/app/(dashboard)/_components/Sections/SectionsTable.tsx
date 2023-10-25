@@ -16,7 +16,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { SectionService } from "@/services/SectionService";
+import { SectionService } from "@/services";
 import { useToast } from "@/components/ui/use-toast";
 
 type PropsType = {

@@ -5,7 +5,7 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { useToast } from '@/components/ui/use-toast'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { SectionService } from '@/services'
+import { GalleryService, SectionService } from '@/services'
 import { ISectionData } from '../../dashboard/sections/[section]/page'
 
 
@@ -16,9 +16,10 @@ type PropTypes = {
 
 const SectionsForm = ({ initialData, method }: PropTypes) => {
     const sectionService = new SectionService({ isServer: false });
+    const galleryService = new GalleryService({ isServer: false });
+
     const { toast } = useToast();
 
-    // const initialValues = initialData
 
     const [initialValues, setInitialValues] = useState(initialData);
 
@@ -64,8 +65,22 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
         return errors
     }
 
-    const handleDeleteGalleryItem = (id: number) => {
+    const handleDeleteGalleryItem = async (id: number) => {
 
+        try {
+            await galleryService.deleteById(id);
+
+            toast({
+                title: "Deleted",
+            })
+        } catch (error) {
+
+            toast({
+                title: "Error",
+                description: `cant deleted`,
+                variant: "destructive"
+            })
+        }
 
     }
 
@@ -77,24 +92,30 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
             validate={handleValidate}
             enableReinitialize
         >
-            {({ isSubmitting, initialValues, setFieldValue }) => (
+            {({ isSubmitting, initialValues }) => (
                 <>
                     <Form>
-                        <div className='space-y-2 mb-6'>
+                        <div className='space-y-4 mb-6'>
                             {
                                 Object.keys(initialValues.SectionData).map((key, index) => {
 
                                     return (
-                                        key !== "Gallery" &&
+                                        key !== "Gallery" && key !== "id" &&
                                         <div
                                             className='flex flex-col gap-1'
                                             key={index}
                                         >
+                                            <label
+                                                htmlFor={`${key}`}
+                                                className='text-xs font-bold'
+                                            >
+                                                {key}
+                                            </label>
                                             <Field
                                                 name={`SectionData.${key}`}
                                                 as={Input}
                                                 placeholder={key}
-                                                disabled={key === "id"}
+                                                id={key}
                                             />
                                             <span className='text-destructive'>
                                                 <ErrorMessage className='bg-red-200' name={`SectionData.${key}`} />
@@ -127,6 +148,7 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                                         {
 
                                             Object.keys(data).map((key, idx) => (
+                                                key !== "id" && key !== "sectionId" &&
                                                 <React.Fragment key={idx}>
                                                     <Field
                                                         name={`GalleryData[${index}].${key}`}
