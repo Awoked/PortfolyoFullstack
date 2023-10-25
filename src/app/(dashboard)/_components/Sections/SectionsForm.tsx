@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Gallery, SectionData } from '@prisma/client'
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { useToast } from '@/components/ui/use-toast'
@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { galleryService, sectionService } from '@/services'
 import { ISectionData } from '../../dashboard/sections/[section]/page'
+import Tiptap from '@/components/Tiptap/Tiptap'
 
 
 type PropTypes = {
@@ -15,12 +16,7 @@ type PropTypes = {
 }
 
 const SectionsForm = ({ initialData, method }: PropTypes) => {
-    // const sectionService = new SectionService({ isServer: false });
-    
-
     const { toast } = useToast();
-
-
     const [initialValues, setInitialValues] = useState(initialData);
 
     const handleFormSubmit = async (
@@ -66,7 +62,6 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
     }
 
     const handleDeleteGalleryItem = async (id: number) => {
-
         try {
             await galleryService.deleteById(id);
 
@@ -81,18 +76,16 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                 variant: "destructive"
             })
         }
-
     }
-
 
     return (
         <Formik
             initialValues={initialValues}
             onSubmit={handleFormSubmit}
             validate={handleValidate}
-            enableReinitialize
+            enableReinitialize={true}
         >
-            {({ isSubmitting, initialValues }) => (
+            {({ isSubmitting, initialValues, setFieldValue }) => (
                 <>
                     <Form>
                         <div className='space-y-4 mb-6'>
@@ -126,6 +119,10 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                             }
                         </div>
 
+                        <Tiptap
+                            onChange={(richText) => { setFieldValue("SectionData.content", richText) }}
+                            description={initialValues.SectionData.content ? initialValues.SectionData.content : '<p>İçerik güncelleniyor...</p>'}
+                        />
 
                         <p className='text-2xl font-medium mb-2'>
                             Galeri

@@ -1,5 +1,4 @@
 import { SectionDataType } from "@/app/api/sections/route";
-import { IServiceOptions } from ".";
 import { Service } from "./Service";
 
 class SectionService extends Service {
