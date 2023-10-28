@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { RootUrls } from '@/utils/consts'
 import { SectionsForm } from '@/app/(dashboard)/_components/Sections'
 import { Gallery, SectionData } from '@prisma/client'
+import "@uploadthing/react/styles.css"
 
 type PageProps = {
     params: {
@@ -38,14 +39,6 @@ const page = async ({ params }: PageProps) => {
                 secondLinkHref: '',
                 secondLinkText: '',
             },
-            GalleryData: [
-                {
-                    id: 0,
-                    imageLinkHref: '',
-                    imageTitle: '',
-                    sectionId: 0
-                }
-            ]
         }
     } else {
         const SectionData = await sectionService.getBySection(params.section);

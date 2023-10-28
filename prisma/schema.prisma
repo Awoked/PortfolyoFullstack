@@ -39,6 +39,7 @@ model Gallery {
   sectionId     Int
   imageLinkHref String
   imageTitle    String?
+  fileKey       String?
 
   @@index([sectionId])
 }

@@ -4,7 +4,8 @@ import { Service } from "./Service";
 class SectionService extends Service {
     private _fullReqURL: string = this.getFullReq("/sections");
 
-
+ 
+    
     async getAll() {
         const response = await fetch(this._fullReqURL, {
             next: {

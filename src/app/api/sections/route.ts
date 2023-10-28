@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
     const _id = searchParams.get("id");
     const _section = searchParams.get("section");
 
+
     try {
 
         if (_id) {

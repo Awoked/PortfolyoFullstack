@@ -10,6 +10,10 @@ import { ISectionData } from '../../dashboard/sections/[section]/page'
 import Tiptap from '@/components/Tiptap/Tiptap'
 
 
+import { UploadButton } from "@uploadthing/react";
+import { OurFileRouter } from '@/app/api/uploadthing/core'
+
+
 type PropTypes = {
     initialData: ISectionData
     method?: 'create' | 'update'
@@ -163,27 +167,16 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                             }
                         </div>
 
-                        <Button
-                            type='button'
-                            className='w-full mb-10'
-                            onClick={() => {
 
-                                setInitialValues((snapshot) => {
-                                    const SectionData = { ...snapshot.SectionData };
-                                    const newGalleryData = [
-                                        ...snapshot.GalleryData as Gallery[],
-                                        { id: 0, imageLinkHref: '', imageTitle: '', sectionId: 0 }
-                                    ]
+                        <UploadButton<OurFileRouter>
+                            endpoint="imageUploader"
+                            onClientUploadComplete={async (res) => {
+                                const sResponse = await galleryService.createGallery({ files: res, sectionId: initialData.SectionData.id })
 
-                                    return {
-                                        ...snapshot,
-                                        GalleryData: newGalleryData
-                                    }
-                                })
+                                console.log('sResponse', sResponse)
                             }}
-                        >
-                            Resim Ekle
-                        </Button>
+                            onUploadError={(err) => { console.log(err) }}
+                        />
 
                         <Button type='submit' disabled={isSubmitting}>
                             {isSubmitting ? "Kaydediliyor..." : "Kaydet"}

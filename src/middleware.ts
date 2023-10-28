@@ -10,7 +10,7 @@ export default withAuth(
         callbacks: {
             authorized({ req, token}) {
 
-                if (req.nextUrl.pathname.includes("/api") && req.method !== "GET" || req.nextUrl.pathname.includes("/dashboard") ) {
+                if (req.nextUrl.pathname.includes("/api") && req.method !== "GET" || req.nextUrl.pathname.includes("/dashboard") && !req.nextUrl.pathname.includes("/api/uploadthing")) {
                     return token?.role === "admin"
                 }
 
