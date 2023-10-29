@@ -7,29 +7,29 @@ import ProjectsSection from "@/components/ProjectsSection";
 import DrawingsSection from "@/components/DrawingsSection";
 import ContactSection from "@/components/ContactSection";
 import { sectionService } from '@/services';
-import { SectionData } from '@prisma/client';
-import Image from 'next/image';
-import { Send } from 'lucide-react';
+import { Gallery, SectionData } from '@prisma/client';
 
 
 const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 
+interface ISectionData extends SectionData {
+    Gallery: Gallery[]
+}
 export default async function Home() {
-  // const sectionService =  SectionService;
 
-  const SectionsData: SectionData[] = await sectionService.getAll();
+    const SectionsData: ISectionData[] = await sectionService.getAll();
 
-  const heroSectionData = SectionsData.find(x => x.section === "hero");
+    const heroSectionData = SectionsData.find(x => x.section === "hero");
 
-  return (
-    <main className={`${chivo_mono.className} transition-all`}>
+    return (
+        <main className={`${chivo_mono.className}`}>
 
-      <HeroSection sectionData={heroSectionData} />
-      <AboutSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <DrawingsSection />
-      <ContactSection />
-    </main>
-  )
+            <HeroSection sectionData={heroSectionData} />
+            <AboutSection />
+            <SkillsSection />
+            <ProjectsSection />
+            <DrawingsSection />
+            <ContactSection />
+        </main>
+    )
 }

@@ -4,13 +4,13 @@ import { Service } from "./Service";
 class GalleryService extends Service {
     private _fullReqURL: string = this.getFullReq("/gallery");
 
-    async createGallery({ sectionId, files }: galleryPostType) {
+    async createGallery({ sectionId, files, filterKey }: galleryPostType) {
         const response = await fetch(this._fullReqURL, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ sectionId, files })
+            body: JSON.stringify({ sectionId, filterKey, files })
         })
         return response.json();
     }

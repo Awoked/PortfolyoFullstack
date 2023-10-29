@@ -34,9 +34,9 @@ CREATE TABLE `Gallery` (
     `sectionId` INTEGER NOT NULL,
     `imageLinkHref` VARCHAR(191) NOT NULL,
     `imageTitle` VARCHAR(191) NULL,
+    `fileKey` VARCHAR(191) NULL,
+    `filterK` VARCHAR(191) NOT NULL,
 
+    INDEX `Gallery_sectionId_idx`(`sectionId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- AddForeignKey
-ALTER TABLE `Gallery` ADD CONSTRAINT `Gallery_sectionId_fkey` FOREIGN KEY (`sectionId`) REFERENCES `SectionData`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

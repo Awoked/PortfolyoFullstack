@@ -12,6 +12,7 @@ import Tiptap from '@/components/Tiptap/Tiptap'
 
 import { UploadButton } from "@uploadthing/react";
 import { OurFileRouter } from '@/app/api/uploadthing/core'
+import Image from 'next/image'
 
 
 type PropTypes = {
@@ -42,6 +43,8 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
             })
         }
 
+        await RevalidateValues();
+
         toast({
             title: "Success",
             description: `${values.SectionData.section} section ${method === "create" ? "Created" : "Saved"}!`,
@@ -69,11 +72,14 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
         try {
             await galleryService.deleteById(id);
 
+            await RevalidateValues();
+
+
             toast({
                 title: "Deleted",
             })
         } catch (error) {
-
+            await RevalidateValues();
             toast({
                 title: "Error",
                 description: `cant deleted`,
@@ -82,111 +88,138 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
         }
     }
 
+    async function RevalidateValues() {
+        const SectionData = await sectionService.getBySection(initialData.SectionData.section);
+        let data = {
+            SectionData: SectionData,
+            GalleryData: SectionData.Gallery
+        }
+        setInitialValues(data);
+    }
+
     return (
-        <Formik
-            initialValues={initialValues}
-            onSubmit={handleFormSubmit}
-            validate={handleValidate}
-            enableReinitialize={true}
-        >
-            {({ isSubmitting, initialValues, setFieldValue }) => (
-                <>
-                    <Form>
-                        <div className='space-y-4 mb-6'>
-                            {
-                                Object.keys(initialValues.SectionData).map((key, index) => {
+        <>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={handleFormSubmit}
+                validate={handleValidate}
+                enableReinitialize={true}
+            >
+                {({ isSubmitting, initialValues, setFieldValue }) => (
+                    <>
+                        <Form>
+                            <div className='space-y-4 mb-6'>
+                                {
+                                    Object.keys(initialValues.SectionData).map((key, index) => {
 
-                                    return (
-                                        key !== "Gallery" && key !== "id" &&
-                                        <div
-                                            className='flex flex-col gap-1'
-                                            key={index}
-                                        >
-                                            <label
-                                                htmlFor={`${key}`}
-                                                className='text-xs font-bold'
+                                        return (
+                                            key !== "Gallery" && key !== "id" && key !== "content" &&
+                                            <div
+                                                className='flex flex-col gap-1'
+                                                key={index}
                                             >
-                                                {key}
-                                            </label>
-                                            <Field
-                                                name={`SectionData.${key}`}
-                                                as={Input}
-                                                placeholder={key}
-                                                id={key}
+                                                <label
+                                                    htmlFor={`${key}`}
+                                                    className='text-xs font-bold'
+                                                >
+                                                    {key}
+                                                </label>
+                                                <Field
+                                                    name={`SectionData.${key}`}
+                                                    as={Input}
+                                                    placeholder={key}
+                                                    id={key}
+                                                />
+                                                <span className='text-destructive'>
+                                                    <ErrorMessage className='bg-red-200' name={`SectionData.${key}`} />
+                                                </span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+
+                            <Tiptap
+                                onChange={(richText) => { setFieldValue("SectionData.content", richText) }}
+                                description={initialValues.SectionData.content ? initialValues.SectionData.content : '<p>İçerik güncelleniyor...</p>'}
+                            />
+
+                            <p className='text-2xl font-medium mb-2'>
+                                Galeri
+                            </p>
+
+                            <div className='grid grid-cols-3 mb-2'>
+                                {
+                                    initialValues.GalleryData?.map((data, index) => (
+                                        <div key={index} className='space-y-2 border-2 border-primary-foreground p-2 rounded-md'>
+
+                                            <div className='flex justify-end'>
+                                                <Button
+                                                    type='button'
+                                                    variant={"destructive"}
+                                                    onClick={() => handleDeleteGalleryItem(data.id)}
+                                                >
+                                                    X
+                                                </Button>
+                                            </div>
+                                            <Image
+                                                src={data.imageLinkHref}
+                                                width={250}
+                                                height={500}
+                                                className='w-full mx-auto object-contain'
+                                                alt={data.imageTitle ? data.imageTitle : ''}
                                             />
-                                            <span className='text-destructive'>
-                                                <ErrorMessage className='bg-red-200' name={`SectionData.${key}`} />
-                                            </span>
+                                            {
+
+                                                Object.keys(data).map((key, idx) => (
+                                                    key !== "id" && key !== "sectionId" &&
+                                                    <React.Fragment key={idx}>
+                                                        <Field
+                                                            name={`GalleryData[${index}].${key}`}
+                                                            as={Input}
+                                                            placeholder={key}
+                                                            disabled={false}
+                                                        />
+
+
+                                                    </React.Fragment>
+                                                ))
+                                            }
                                         </div>
-                                    )
-                                })
-                            }
-                        </div>
 
-                        <Tiptap
-                            onChange={(richText) => { setFieldValue("SectionData.content", richText) }}
-                            description={initialValues.SectionData.content ? initialValues.SectionData.content : '<p>İçerik güncelleniyor...</p>'}
-                        />
+                                    ))
 
-                        <p className='text-2xl font-medium mb-2'>
-                            Galeri
-                        </p>
-
-                        <div className='space-y-2 mb-2'>
-                            {
-                                initialValues.GalleryData?.map((data, index) => (
-                                    <div key={index} className='space-y-2 border-2 border-primary-foreground p-2 rounded-md'>
-
-                                        <div className='flex justify-end'>
-                                            <Button
-                                                type='button'
-                                                variant={"destructive"}
-                                                onClick={() => handleDeleteGalleryItem(data.id)}
-                                            >
-                                                X
-                                            </Button>
-                                        </div>
-                                        {
-
-                                            Object.keys(data).map((key, idx) => (
-                                                key !== "id" && key !== "sectionId" &&
-                                                <React.Fragment key={idx}>
-                                                    <Field
-                                                        name={`GalleryData[${index}].${key}`}
-                                                        as={Input}
-                                                        placeholder={key}
-                                                        disabled={false}
-                                                    />
-                                                </React.Fragment>
-                                            ))
-                                        }
-                                    </div>
-
-                                ))
-
-                            }
-                        </div>
+                                }
+                            </div>
 
 
-                        <UploadButton<OurFileRouter>
-                            endpoint="imageUploader"
-                            onClientUploadComplete={async (res) => {
-                                const sResponse = await galleryService.createGallery({ files: res, sectionId: initialData.SectionData.id })
+                            <UploadButton<OurFileRouter>
+                                endpoint="imageUploader"
+                                onClientUploadComplete={async (res) => {
+                                    const sResponse = await galleryService.createGallery({
+                                        files: res,
+                                        sectionId: initialData.SectionData.id,
+                                        filterKey: 'sadasd'
+                                    })
 
-                                console.log('sResponse', sResponse)
-                            }}
-                            onUploadError={(err) => { console.log(err) }}
-                        />
+                                    await RevalidateValues();
+                                }}
+                                onUploadError={(err) => { console.log(err) }}
+                            />
 
-                        <Button type='submit' disabled={isSubmitting}>
-                            {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
-                        </Button>
-                    </Form>
+                            <Button type='submit' disabled={isSubmitting}>
+                                {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
+                            </Button>
+                        </Form>
 
-                </>
-            )
-            }
-        </Formik >
+                    </>
+                )
+                }
+            </Formik >
+
+
+
+        </>
     )
 }
 

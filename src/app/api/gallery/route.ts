@@ -4,15 +4,15 @@ import { Gallery } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { UploadFileResponse } from "uploadthing/client";
 
-
 export type galleryPostType = {
     files: UploadFileResponse[] | undefined,
     sectionId: number,
+    filterKey: string,
 }
 
 export async function POST(req: NextRequest) {
     const body: galleryPostType = await req.json();
-
+    console.log('body', body)
     try {
         const galleries: Gallery[] = [];
         body.files?.forEach(async (data, _) => {
@@ -21,11 +21,13 @@ export async function POST(req: NextRequest) {
                     sectionId: body.sectionId,
                     imageLinkHref: data.url,
                     imageTitle: data.name,
+                    filterKey: body.filterKey,
                     fileKey: data.key
                 }
             })
             galleries.push(galleryData);
         });
+
 
 
         return NextResponse.json({ galleries }, { status: 201 });
@@ -39,7 +41,7 @@ export async function POST(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
-    
+
     try {
         const data = await prisma.gallery.delete({
             where: {

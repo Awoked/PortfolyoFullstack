@@ -6,11 +6,14 @@ import { Bounce, Circ, Elastic, Expo, Power3, Power4, gsap } from 'gsap';
 import { BsCaretDown } from "react-icons/bs";
 import styles from "./hero.module.css";
 import Image from 'next/image';
-import { SectionData } from '@prisma/client';
+import { Gallery, SectionData } from '@prisma/client';
 
 
+interface ISectionData extends SectionData {
+    Gallery: Gallery[]
+}
 
-const HeroSection = ({ sectionData }: { sectionData?: SectionData }) => {
+const HeroSection = ({ sectionData }: { sectionData?: ISectionData }) => {
     if (!sectionData) {
         return (
             <div>blyaaatt</div>
@@ -100,13 +103,13 @@ const HeroSection = ({ sectionData }: { sectionData?: SectionData }) => {
                     </div>
 
                     <div className='w-full h-full lg:w-[500px] flex justify-end'>
-                        <Image
-                            src="/images/peepocomfy-peepo.gif"
-                            // src={sectionData?.Gallery[0].imageLinkHref}
+                        < Image
+                            // src="/images/peepocomfy-peepo.gif"
+                            src={sectionData.Gallery.find(x => x.filterKey === "pinkie")?.imageLinkHref as string}
                             className='-scale-x-100 peepo w-full h-full object-contain opacity-0'
                             width={500}
                             height={500}
-                            alt={sectionData?.Gallery[0].imageTitle}
+                            alt={sectionData.Gallery.find(x => x.filterKey === "pinkie")?.imageTitle as string}
                         />
                     </div>
 
