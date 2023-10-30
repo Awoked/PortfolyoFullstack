@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { Gallery, SectionData } from "@prisma/client";
+import { SectionType } from "./types";
 
-export type SectionDataType = {
-    SectionData: SectionData;
-    GalleryData?: Gallery[]
-}
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
@@ -60,35 +56,21 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
 
-    const body: SectionDataType = await req.json();
-
-    const _GalleryData: Omit<Gallery, "id" | "sectionId">[] = [];
-    body.GalleryData?.forEach((data, _) => {
-        _GalleryData.push({
-            imageTitle: data.imageTitle,
-            imageLinkHref: data.imageLinkHref,
-        })
-    })
+    const body: SectionType = await req.json();
 
     try {
         const section = await prisma.sectionData.create({
             data: {
-                ...body.SectionData,
+                ...body,
                 id: undefined,
-                Gallery: body.GalleryData ? {
-                    createMany: {
-                        data: _GalleryData
-                    }
-                } : undefined
+                Gallery: undefined
             },
             include: {
                 Gallery: true
             }
         })
 
-        return NextResponse.json({
-            ...section
-        }, {
+        return NextResponse.json(section, {
             status: 201
         });
 
@@ -103,60 +85,25 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-    const body: SectionDataType = await req.json();
+    const body: SectionType = await req.json();
 
 
     try {
         const section = await prisma.sectionData.update({
             data: {
-                ...body.SectionData,
+                ...body,
                 Gallery: undefined,
                 id: undefined
             },
             where: {
-                id: body.SectionData.id,
+                id: body.id,
             },
+            include: {
+                Gallery: true
+            }
         })
 
-        if (body.GalleryData) {
-            body.GalleryData.forEach(async (data, index) => {
-
-                const existingGallery = await prisma.gallery.findUnique({
-                    where: {
-                        id: data.id
-                    }
-                })
-
-                if (existingGallery) {
-                    const updatedGallery = await prisma.gallery.update({
-                        data: {
-                            ...data,
-                            id: undefined,
-                            sectionId: undefined,
-                        },
-
-                        where: {
-                            id: data.id
-                        }
-                    })
-                } else {
-                    const createdGallery = await prisma.gallery.create({
-                        data: {
-                            ...data,
-                            id: undefined,
-                            sectionId: body.SectionData.id,
-                        }
-                    })
-
-                }
-
-
-            })
-        }
-
-        return NextResponse.json({
-            ...section
-        }, {
+        return NextResponse.json(section, {
             status: 200
         })
 
@@ -181,10 +128,7 @@ export async function DELETE(req: NextRequest) {
             }
         })
 
-        return NextResponse.json({
-            ...section
-
-        }, {
+        return NextResponse.json(section, {
             status: 200
         })
     } catch (error) {

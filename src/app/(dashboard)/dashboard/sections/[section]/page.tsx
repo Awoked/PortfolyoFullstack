@@ -5,6 +5,7 @@ import { RootUrls } from '@/utils/consts'
 import { SectionsForm } from '@/app/(dashboard)/_components/Sections'
 import { Gallery, SectionData } from '@prisma/client'
 import "@uploadthing/react/styles.css"
+import { SectionType } from '@/app/api/sections/types'
 
 type PageProps = {
     params: {
@@ -12,10 +13,6 @@ type PageProps = {
     }
 }
 
-export interface ISectionData {
-    SectionData: SectionData
-    GalleryData?: Gallery[]
-}
 
 const page = async ({ params }: PageProps) => {
     // const sectionService = new SectionService();
@@ -24,28 +21,23 @@ const page = async ({ params }: PageProps) => {
 
     const isCreatePage = section === "create"
 
-    let initialData: ISectionData;
+    let initialData: SectionType | null;
     if (isCreatePage) {
         initialData = {
-            SectionData: {
-                id: 0,
-                section: '',
-                subTitle: '',
-                title: '',
-                description: '',
-                content: '',
-                firstLinkHref: '',
-                firstLinkText: '',
-                secondLinkHref: '',
-                secondLinkText: '',
-            },
+            id: 0,
+            section: '',
+            subTitle: '',
+            title: '',
+            description: '',
+            content: '',
+            firstLinkHref: '',
+            firstLinkText: '',
+            secondLinkHref: '',
+            secondLinkText: '',
         }
     } else {
         const SectionData = await sectionService.getBySection(params.section);
-        initialData = {
-            SectionData: SectionData,
-            GalleryData: SectionData.Gallery
-        }
+        initialData = SectionData
 
         if (!initialData) {
             redirect(RootUrls.Dashboard.SubPages.Sections.url)

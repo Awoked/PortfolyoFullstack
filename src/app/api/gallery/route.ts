@@ -10,9 +10,27 @@ export type galleryPostType = {
     filterKey: string,
 }
 
+export async function GET(req: NextRequest) {
+    const { searchParams } = new URL(req.url);
+    const sectionId = searchParams.get("sectionId");
+
+    try {
+        const gallery = await prisma.gallery.findMany({
+            where: {
+                sectionId: Number(sectionId)
+            }
+        })
+
+        return NextResponse.json(gallery, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ error }, { status: 500 });
+    }
+
+}
+
 export async function POST(req: NextRequest) {
     const body: galleryPostType = await req.json();
-    console.log('body', body)
+
     try {
         const galleries: Gallery[] = [];
         body.files?.forEach(async (data, _) => {

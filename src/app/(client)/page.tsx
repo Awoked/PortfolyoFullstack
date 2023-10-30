@@ -8,6 +8,7 @@ import DrawingsSection from "@/components/DrawingsSection";
 import ContactSection from "@/components/ContactSection";
 import { sectionService } from '@/services';
 import { Gallery, SectionData } from '@prisma/client';
+import { findSection } from '@/lib/utils';
 
 
 const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
@@ -19,7 +20,7 @@ export default async function Home() {
 
     const SectionsData: ISectionData[] = await sectionService.getAll();
 
-    const heroSectionData = SectionsData.find(x => x.section === "hero");
+    const heroSectionData = findSection("hero", SectionsData);
 
     return (
         <main className={`${chivo_mono.className}`}>

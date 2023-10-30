@@ -1,8 +1,20 @@
 import { galleryPostType } from "@/app/api/gallery/route";
 import { Service } from "./Service";
+import { GalleryType } from "@/app/api/gallery/types";
 
 class GalleryService extends Service {
     private _fullReqURL: string = this.getFullReq("/gallery");
+
+    async getSectionGallery(sectionId: string | number) {
+        const response = await fetch(`${this._fullReqURL}?sectionId=${sectionId}`, {
+            next: {
+                revalidate: 5
+            }
+        })
+        if (response.status !== 200) return null
+
+        return await response.json() as GalleryType[];
+    }
 
     async createGallery({ sectionId, files, filterKey }: galleryPostType) {
         const response = await fetch(this._fullReqURL, {

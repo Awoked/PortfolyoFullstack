@@ -9,7 +9,7 @@ const Breadcrumb = () => {
     
     return (
         <div>
-            <ul className='flex gap-4 items-center'>
+            <ul className='flex gap-4 items-center overflow-x-auto pr-2'>
                 {
                     pathNames.map((link, index) => {
                         let href = `/${pathNames.slice(0, index + 1).join('/')}`;
