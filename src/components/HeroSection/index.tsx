@@ -14,11 +14,7 @@ interface ISectionData extends SectionData {
 }
 
 const HeroSection = ({ sectionData }: { sectionData?: ISectionData }) => {
-    if (!sectionData) {
-        return (
-            <div>blyaaatt</div>
-        )
-    }
+
     // First Load Animations
     useEffect(() => {
         const tl = gsap.timeline();
@@ -81,7 +77,7 @@ const HeroSection = ({ sectionData }: { sectionData?: ISectionData }) => {
                     <div className='w-max'>
 
                         <p className={`title opacity-0 max-[320px]:text-[3rem] max-[375px]:text-[3.5rem] text-[4.5rem] md:text-[5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-inherit`}>
-                            {sectionData.subTitle}
+                            {sectionData?.subTitle}
                         </p>
 
                         <h1
@@ -97,7 +93,7 @@ const HeroSection = ({ sectionData }: { sectionData?: ISectionData }) => {
                             }
                         </h1>
                         {
-                            sectionData.content &&
+                            sectionData?.content &&
                             <div dangerouslySetInnerHTML={{ __html: sectionData.content }}></div>
                         }
                     </div>
@@ -105,11 +101,11 @@ const HeroSection = ({ sectionData }: { sectionData?: ISectionData }) => {
                     <div className='w-full h-full lg:w-[500px] flex justify-end'>
                         < Image
                             // src="/images/peepocomfy-peepo.gif"
-                            src={sectionData.Gallery.find(x => x.filterKey === "pinkie")?.imageLinkHref as string}
+                            src={sectionData?.Gallery.find(x => x.filterKey === "pinkie")?.imageLinkHref as string}
                             className='-scale-x-100 peepo w-full h-full object-contain opacity-0'
                             width={500}
                             height={500}
-                            alt={sectionData.Gallery.find(x => x.filterKey === "pinkie")?.imageTitle as string}
+                            alt={sectionData?.Gallery.find(x => x.filterKey === "pinkie")?.imageTitle as string}
                         />
                     </div>
 
