@@ -1,4 +1,4 @@
-import { galleryPostType } from "@/app/api/gallery/route";
+import { galleryPostType, galleryPutType } from "@/app/api/gallery/types";
 import { Service } from "./Service";
 import { GalleryType } from "@/app/api/gallery/types";
 
@@ -16,6 +16,7 @@ class GalleryService extends Service {
         return await response.json() as GalleryType[];
     }
 
+
     async createGallery({ sectionId, files, filterKey }: galleryPostType) {
         const response = await fetch(this._fullReqURL, {
             method: "POST",
@@ -24,8 +25,21 @@ class GalleryService extends Service {
             },
             body: JSON.stringify({ sectionId, filterKey, files })
         })
-        return response.json();
+        return await response.json();
     }
+
+    async updateGallery(gallery: galleryPutType[]) {
+        const response = await fetch(this._fullReqURL, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(gallery)
+        })
+        if (response.status !== 200) return null;
+        return await response.json();
+    }
+
 
     async deleteById(id: string | number) {
         const response = await fetch(this._fullReqURL + `?id=${id}`, {

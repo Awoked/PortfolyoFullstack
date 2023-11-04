@@ -2,7 +2,7 @@ import React from 'react'
 import { twMerge } from 'tailwind-merge'
 
 type PropsType = {
-    children: React.ReactNode
+    children?: React.ReactNode
     className?: string
 }
 const SectionTitle = ({ children, className }: PropsType) => {

@@ -2,13 +2,8 @@ import prisma from "@/lib/db";
 import { utapi } from "@/server/uploadthing";
 import { Gallery } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { UploadFileResponse } from "uploadthing/client";
+import { galleryPostType, galleryPutType } from "./types";
 
-export type galleryPostType = {
-    files: UploadFileResponse[] | undefined,
-    sectionId: number,
-    filterKey: string,
-}
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
@@ -25,7 +20,6 @@ export async function GET(req: NextRequest) {
     } catch (error) {
         return NextResponse.json({ error }, { status: 500 });
     }
-
 }
 
 export async function POST(req: NextRequest) {
@@ -54,6 +48,29 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error }, { status: 500 })
     }
 
+}
+
+export async function PUT(req: NextRequest) {
+    const body: galleryPutType[] = await req.json();
+
+    try {
+        const galleries: Gallery[] = [];
+        body.forEach(async (data, _) => {
+            const gallery = await prisma.gallery.update({
+                where: {
+                    id: data.id
+                },
+                data: {
+                    ...data,
+                    id: undefined,
+                }
+            })
+            galleries.push(gallery);
+        })
+        return NextResponse.json(galleries, { status: 200 })
+    } catch (error) {
+        return NextResponse.json({ error }, { status: 500 })
+    }
 }
 
 export async function DELETE(req: NextRequest) {

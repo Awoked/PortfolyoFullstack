@@ -2,6 +2,7 @@
 import React from 'react'
 import { DataTable } from '../../_components/Sections'
 import { sectionService } from '@/services'
+import SectionTitle from '../../_components/ui/SectionTitle';
 
 
 const page = async () => {
@@ -13,7 +14,16 @@ const page = async () => {
   return (
     <section className='mb-10'>
       <div className="container">
-        <DataTable data={sectionData} />
+        {
+          sectionData ?
+            <DataTable data={sectionData} />
+            :
+            <SectionTitle>
+              <h1>
+                Server Error
+              </h1>
+            </SectionTitle>
+        }
       </div>
     </section>
   )

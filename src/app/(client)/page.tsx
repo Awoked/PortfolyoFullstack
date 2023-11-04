@@ -13,13 +13,13 @@ import { findSection } from '@/lib/utils';
 
 const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
 
-interface ISectionData extends SectionData {
-    Gallery: Gallery[]
-}
 export default async function Home() {
 
-    const SectionsData: ISectionData[] = await sectionService.getAll();
+    const SectionsData = await sectionService.getAll();
 
+    if (!SectionsData) {
+        return  "Error"
+    }
     const heroSectionData = findSection("hero", SectionsData);
 
     return (

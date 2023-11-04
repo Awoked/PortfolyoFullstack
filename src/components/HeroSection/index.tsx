@@ -7,13 +7,11 @@ import { BsCaretDown } from "react-icons/bs";
 import styles from "./hero.module.css";
 import Image from 'next/image';
 import { Gallery, SectionData } from '@prisma/client';
+import { SectionType } from '@/app/api/sections/types';
+import { findGalleryKey } from '@/lib/utils';
 
 
-interface ISectionData extends SectionData {
-    Gallery: Gallery[]
-}
-
-const HeroSection = ({ sectionData }: { sectionData?: ISectionData }) => {
+const HeroSection = ({ sectionData }: { sectionData?: SectionType }) => {
 
     // First Load Animations
     useEffect(() => {
@@ -66,6 +64,8 @@ const HeroSection = ({ sectionData }: { sectionData?: ISectionData }) => {
     const ScrollDown = () => {
         window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
     }
+
+
     return (
         <>
 
@@ -99,14 +99,17 @@ const HeroSection = ({ sectionData }: { sectionData?: ISectionData }) => {
                     </div>
 
                     <div className='w-full h-full lg:w-[500px] flex justify-end'>
-                        < Image
-                            // src="/images/peepocomfy-peepo.gif"
-                            src={sectionData?.Gallery.find(x => x.filterKey === "pinkie")?.imageLinkHref as string}
-                            className='-scale-x-100 peepo w-full h-full object-contain opacity-0'
-                            width={500}
-                            height={500}
-                            alt={sectionData?.Gallery.find(x => x.filterKey === "pinkie")?.imageTitle as string}
-                        />
+                        {
+                            sectionData?.Gallery &&
+                            <Image
+                                // src="/images/peepocomfy-peepo.gif"
+                                src={findGalleryKey('secondaryKey', sectionData.Gallery)?.imageLinkHref as string}
+                                className='-scale-x-100 peepo w-full h-full object-contain opacity-0'
+                                width={500}
+                                height={500}
+                                alt={findGalleryKey('primaryKey', sectionData.Gallery)?.imageTitle as string}
+                            />
+                        }
                     </div>
 
                 </div>

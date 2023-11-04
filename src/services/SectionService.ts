@@ -64,7 +64,6 @@ class SectionService extends Service {
         if (response.status !== 200) return null;
 
         return await response.json() as SectionType;
-
     }
 
     async deleteSectionById(id: string | number) {

@@ -31,9 +31,11 @@ const DashboardLayout = ({ children }: ComponentType) => {
             <div className={`${poppins.className} flex h-screen overflow-hidden`}>
                 <SideBar />
                 <main className='h-full bg-dashboard-background flex-1 overflow-y-auto'>
-                    <div className="container py-6">
-                        <Breadcrumb />
-                    </div>
+                    <section className='py-6 border-b-2'>
+                        <div className="container">
+                            <Breadcrumb />
+                        </div>
+                    </section>
                     {children}
                 </main>
             </div>

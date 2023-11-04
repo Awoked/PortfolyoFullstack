@@ -2,6 +2,7 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
 
+
 const auth = (req: Request) => ({ id: "fakeID" });
 
 
@@ -18,6 +19,13 @@ export const ourFileRouter = {
 
             console.log("file url", file.url);
         }),
+
+    singleUploader: f({ image: { maxFileSize: "1MB", maxFileCount: 1 } })
+        .onUploadComplete(async ({ file }) => {
+
+            console.log("file url", file.url);
+        }),
+
     mediaPost: f({
         image: { maxFileSize: "2MB", maxFileCount: 4 },
         video: { maxFileSize: "256MB", maxFileCount: 1 }

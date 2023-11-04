@@ -24,7 +24,8 @@ type PropTypes = {
 const SectionsForm = ({ initialData, method }: PropTypes) => {
     const { toast } = useToast();
     const [initialValues, setInitialValues] = useState(initialData);
-    const [galleryData, setGalleryData] = useState<GalleryType[]>();
+    const [galleryData, setGalleryData] = useState<GalleryType[]>([]);
+    const [galleryLoading, setGalleryLoading] = useState<{ id: number, isLoading: boolean }>({ id: 0, isLoading: false });
 
     const handleFormSubmit = async (
         values: SectionType,
@@ -37,7 +38,11 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
         }
         if (method === "update") {
             data = await sectionService.updateSection(values)
+            const gallery = await galleryService.updateGallery(galleryData);
         }
+
+
+
         await RevalidateValues();
 
 
@@ -91,8 +96,10 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
 
     async function RevalidateValues() {
         const SectionData = await sectionService.getBySection(initialData.section);
-        if (SectionData) {
+        const GalleryData = await galleryService.getSectionGallery(initialData.id);
+        if (SectionData && GalleryData) {
             setInitialValues(SectionData);
+            setGalleryData(GalleryData);
         }
     }
 
@@ -101,13 +108,12 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
 
         galleryService.getSectionGallery(initialData.id)
             .then((data) => {
-                console.log('data', data)
                 if (data) {
                     setGalleryData(data)
                 }
             })
 
-    }, [])
+    }, [initialData.id])
 
     return (
         <>
@@ -162,7 +168,8 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
 
                             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-2'>
                                 {
-                                    galleryData?.map((data, index) => (
+                                    galleryData &&
+                                    galleryData.map((data, index) => (
                                         <div key={index} className='space-y-2 border-2 border-primary-foreground p-2 rounded-md'>
 
 
@@ -177,18 +184,26 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                                                             X
                                                         </Button>
                                                     </div>
-                                                    <Image
-                                                        src={data.imageLinkHref}
-                                                        width={250}
-                                                        height={500}
-                                                        className='w-full mx-auto object-contain'
-                                                        alt={data.imageTitle ? data.imageTitle : ''}
-                                                    />
+
+                                                    <div className={`${galleryLoading.id === data.id && galleryLoading.isLoading ?
+                                                        "relative before:absolute before:inset-0 before:bg-black before:backdrop-blur-md before:bg-opacity-50 before:animate-pulse"
+                                                        :
+                                                        "blur-none"}`
+                                                    }
+                                                    >
+                                                        <Image
+                                                            src={data.imageLinkHref}
+                                                            width={250}
+                                                            height={500}
+                                                            onLoad={() => setGalleryLoading({ id: data.id, isLoading: false })}
+                                                            className={`w-full mx-auto object-contain block`}
+                                                            alt={data.imageTitle ? data.imageTitle : ''}
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <div className='space-y-2'>
                                                     {
-
-                                                        Object.keys(data).map((key: string, idx) => (
+                                                        Object.keys(data).map((key, idx) => (
                                                             key !== "id" && key !== "sectionId" &&
                                                             <React.Fragment key={idx}>
                                                                 <Input
@@ -196,12 +211,40 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                                                                     placeholder={key}
                                                                     disabled={false}
                                                                     defaultValue={data[key]}
+                                                                    onChange={(e) => setGalleryData((oldVal) => {
+                                                                        if (oldVal) {
+                                                                            const newValue = oldVal[index];
+                                                                            newValue[key] = e.target.value;
+                                                                            oldVal[index] = newValue
+                                                                            return oldVal
+                                                                        } else {
+                                                                            return oldVal
+                                                                        }
+                                                                    })}
                                                                 />
-
-
                                                             </React.Fragment>
                                                         ))
                                                     }
+                                                    <UploadButton<OurFileRouter>
+                                                        appearance={{
+                                                            button: {
+                                                                width: "100%"
+                                                            }
+                                                        }}
+                                                        onUploadBegin={() => setGalleryLoading({ id: data.id, isLoading: true })}
+                                                        endpoint="singleUploader"
+                                                        onClientUploadComplete={async (res) => {
+                                                            await galleryService.deleteById(data.id);
+                                                            const sResponse = await galleryService.createGallery({
+                                                                files: res,
+                                                                sectionId: initialData.id,
+                                                                filterKey: 'primaryKey'
+                                                            })
+
+                                                            await RevalidateValues();
+                                                        }}
+                                                        onUploadError={(err) => { console.log(err) }}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -218,7 +261,7 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                                     const sResponse = await galleryService.createGallery({
                                         files: res,
                                         sectionId: initialData.id,
-                                        filterKey: 'sadasd'
+                                        filterKey: 'primaryKey'
                                     })
 
                                     await RevalidateValues();
@@ -226,8 +269,8 @@ const SectionsForm = ({ initialData, method }: PropTypes) => {
                                 onUploadError={(err) => { console.log(err) }}
                             />
 
-                            <Button type='submit' disabled={isSubmitting}>
-                                {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
+                            <Button type='submit' disabled={isSubmitting} className='sticky bottom-0 w-full my-4 py-4'>
+                                {isSubmitting ? "Saving..." : "Save"}
                             </Button>
                         </Form>
 

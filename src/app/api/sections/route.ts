@@ -87,7 +87,6 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
     const body: SectionType = await req.json();
 
-
     try {
         const section = await prisma.sectionData.update({
             data: {

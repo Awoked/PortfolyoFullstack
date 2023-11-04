@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { AdminKey } from "@/utils/consts";
 
 interface UserBody extends User {
-    sudoKey: string
+    sudoKey?: string
 }
 
 export async function POST(req: NextRequest) {
