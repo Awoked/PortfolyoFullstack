@@ -24,11 +24,11 @@ const authOptions: NextAuthOptions = {
                     // throw new Error("Geçersiz bilgiler");
                     return null;
                 }
-
-                return {
-                    ...user,
-                    id: user?.id.toString(),
-                };
+                return null
+                // return {
+                //     ...user,
+                //     id: user?.id.toString(),
+                // };
             },
         }),
     ],
