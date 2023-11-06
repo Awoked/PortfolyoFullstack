@@ -18,14 +18,28 @@ export default async function Home() {
     const SectionsData = await sectionService.getAll();
 
     if (!SectionsData) {
-        return  "Error"
+        return "Error"
     }
     const heroSectionData = findSection("hero", SectionsData);
 
+    const getSections = async () => {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/sections`, {
+            next: {
+                revalidate: 1
+            }
+        })
+
+        return await res.json();
+    }
+
+    const newSections = await getSections();
+
+    const heroData = newSections.data.find(x => x.attributes.section === "hero")
+    console.log('heroData', heroData)
     return (
         <main className={`${chivo_mono.className}`}>
 
-            <HeroSection sectionData={heroSectionData} />
+            <HeroSection sectionData={heroData.attributes} />
             <AboutSection />
             <SkillsSection />
             <ProjectsSection />

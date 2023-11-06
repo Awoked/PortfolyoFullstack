@@ -77,7 +77,7 @@ const HeroSection = ({ sectionData }: { sectionData?: SectionType }) => {
                     <div className='w-max'>
 
                         <p className={`title opacity-0 max-[320px]:text-[3rem] max-[375px]:text-[3.5rem] text-[4.5rem] md:text-[5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-inherit`}>
-                            {sectionData?.subTitle}
+                            {sectionData?.subtitle}
                         </p>
 
                         <h1
