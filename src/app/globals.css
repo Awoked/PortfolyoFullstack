@@ -19,7 +19,7 @@ html{
   }
 }
 
-@media (min-width:1600px) {
+@media (min-width:1300px) {
   html{
     font-size: 100%;
   }
@@ -83,7 +83,8 @@ html{
   @apply text-xl xl:text-3xl 2xl:text-4xl font-bold;
 }
 
-.link-v1{
+.link-v1,
+.about-description a{
   @apply font-semibold text-blue-700 hover:text-blue-400 transition-colors;
 }
 

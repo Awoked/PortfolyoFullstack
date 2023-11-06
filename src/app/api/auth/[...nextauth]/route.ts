@@ -1,6 +1,5 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentailsProvider from "next-auth/providers/credentials";
-import prisma from "@/lib/db";
 
 const authOptions: NextAuthOptions = {
     providers: [
@@ -19,15 +18,7 @@ const authOptions: NextAuthOptions = {
             },
             async authorize(credentials, req) {
 
-                const user = await prisma.user.findUnique({
-                    where: {
-                        userName: credentials?.userName,
-                        AND: {
-                            password: credentials?.password,
-                        },
-                    },
-                });
-                await prisma.$disconnect();
+                const user = undefined;
 
                 if (!user) {
                     // throw new Error("Geçersiz bilgiler");

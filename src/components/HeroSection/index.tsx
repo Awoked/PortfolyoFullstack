@@ -6,12 +6,10 @@ import { Bounce, Circ, Elastic, Expo, Power3, Power4, gsap } from 'gsap';
 import { BsCaretDown } from "react-icons/bs";
 import styles from "./hero.module.css";
 import Image from 'next/image';
-import { Gallery, SectionData } from '@prisma/client';
-import { SectionType } from '@/app/api/sections/types';
-import { findGalleryKey } from '@/lib/utils';
+import { Section_Plain } from '@/services/api/sections/types';
 
 
-const HeroSection = ({ sectionData }: { sectionData?: SectionType }) => {
+const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
 
     // First Load Animations
     useEffect(() => {
@@ -93,21 +91,19 @@ const HeroSection = ({ sectionData }: { sectionData?: SectionType }) => {
                             }
                         </h1>
                         {
-                            sectionData?.content &&
-                            <div dangerouslySetInnerHTML={{ __html: sectionData.content }}></div>
+                            <div dangerouslySetInnerHTML={{ __html: sectionData?.content }}></div>
                         }
+
                     </div>
 
                     <div className='w-full h-full lg:w-[500px] flex justify-end'>
                         {
-                            sectionData?.Gallery &&
                             <Image
-                                // src="/images/peepocomfy-peepo.gif"
-                                src={findGalleryKey('secondaryKey', sectionData.Gallery)?.imageLinkHref as string}
+                                src="/images/peepocomfy-peepo.gif"
                                 className='-scale-x-100 peepo w-full h-full object-contain opacity-0'
                                 width={500}
                                 height={500}
-                                alt={findGalleryKey('primaryKey', sectionData.Gallery)?.imageTitle as string}
+                                alt={"asd"}
                             />
                         }
                     </div>
