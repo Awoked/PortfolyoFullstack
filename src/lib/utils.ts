@@ -14,10 +14,12 @@ export async function fetcher<T>(url: string, params?: RequestInit) {
   try {
     const response = await fetch(`${config.strapiURL + url}`, {
       next: {
-        revalidate: config.revalidate
+        revalidate: 0
       },
-      ...params,
+      // ...params,
     });
+
+    
 
     const resData = await response.json();
     const data = resData.data;
