@@ -12,18 +12,18 @@ interface fetcherResponse<T> {
 }
 export async function fetcher<T>(url: string, params?: RequestInit) {
   try {
-    const response = await fetch(`${config.strapiURL + url}`, params ? params : {
+    const response = await fetch(`${config.strapiURL + url}`, {
       next: {
-        revalidate: 10
+        revalidate: 0
       },
     });
 
-    
+
 
     const resData = await response.json();
     const data = resData.data;
     const metadata = resData.meta
-    
+
     return {
       data,
       metadata,
