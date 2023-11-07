@@ -19,22 +19,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section_Plain, projectData: Project[] }) => {
 
-    // const [projectsData, setProjectsData] = useState([
-    //     {
-    //         imageUrl: "/images/projects/project-3d.png",
-    //         githubLink: "https://github.com/Awoked/3DTshirtProjesi",
-    //         liveLink: "https://alper-3d-tshirt.netlify.app",
-    //         details: "Three.js ve React kullanarak yaptığım basit bir proje.",
-    //         title: "3D Tshirt Projesi",
-    //     },
-    //     {
-    //         imageUrl: "/images/projects/e-ticaret.png",
-    //         details: "NextJS, TailwindCSS, Chakra UI, MySql Kullanarak üzerinde çalışmaya devam ettiğim fullstack bir proje. Şuanlık githubda private repository.",
-    //         liveLink: "https://proje3.alperwebapp.online",
-    //         title: "E-Ticaret Projesi",
-    //     }
-    // ]);
-
 
     const [projectsData, setProjectsData] = useState(projectData);
 
@@ -118,12 +102,13 @@ const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section_Pl
                     >
                         {
                             projectsData &&
-                            projectsData.map((project, index) => (
+                            projectsData.map((project, index) => {
+                                let cover = project.attributes.cover?.data?.attributes.url;
 
-                                <SwiperSlide key={index}>
+                                return <SwiperSlide key={index}>
 
                                     <ProjectCard
-                                        imageUrl={config.imageURL + project.attributes.cover?.data.attributes.url}
+                                        imageUrl={cover ? config.imageURL + cover : ""}
                                         githubLink={project.attributes.githubLink}
                                         liveLink={project.attributes.liveLink}
                                         details={project.attributes.details}
@@ -131,7 +116,7 @@ const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section_Pl
                                     />
 
                                 </SwiperSlide>
-                            ))
+                            })
                         }
                         <div className="navigation py-10 flex justify-center gap-3 text-4xl text-black">
                             <button ref={sliderPrev}>

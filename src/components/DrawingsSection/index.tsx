@@ -152,16 +152,18 @@ const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section_Plain
                 <div className='columns-1 sm:columns-2 md:columns-3 2xl:columns-4'>
                     {
                         drawings &&
-                        drawings.map((data, index) => (
-                            <Image
-                                src={config.imageURL + data.attributes.cover?.data.attributes.url}
+                        drawings.map((data, index) => {
+                            let cover = data.attributes.cover?.data?.attributes.url;
+
+                            return <Image
+                                src={cover ? config.imageURL + cover : ""}
                                 width={1024}
                                 height={768}
                                 alt={data.attributes.alt ? data.attributes.alt : 'Alper Koşay / Çizimlerim'}
                                 className='w-full h-auto mb-2'
                                 key={index}
                             />
-                        ))
+                        })
                     }
                 </div>
 
