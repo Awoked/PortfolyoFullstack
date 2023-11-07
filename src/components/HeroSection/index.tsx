@@ -63,7 +63,6 @@ const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
         window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
     }
 
-
     return (
         <>
 
@@ -100,11 +99,11 @@ const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
                         {
                             sectionData?.cover &&
                             <Image
-                                src={sectionData.cover.attributes.url}
+                                src={sectionData.cover.data.attributes.url}
                                 className='-scale-x-100 peepo w-full h-full object-contain opacity-0'
                                 width={500}
                                 height={500}
-                                alt={sectionData.cover.attributes.alternativeText}
+                                alt={sectionData.cover.data.attributes.alternativeText}
                             />
                         }
                     </div>

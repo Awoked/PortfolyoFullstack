@@ -4,7 +4,7 @@ import { Media } from "../types";
 export interface Section {
   id: number;
   attributes: {
-    createdAt: Date;    updatedAt: Date;    publishedAt?: Date;    title?: string;
+    createdAt: Date; updatedAt: Date; publishedAt?: Date; title?: string;
     description?: string;
     subtitle?: string;
     linkhref?: string;
@@ -14,11 +14,11 @@ export interface Section {
   };
 }
 export interface Section_Plain {
-  createdAt: Date;  updatedAt: Date;  publishedAt?: Date;  title?: string;
+  createdAt: Date; updatedAt: Date; publishedAt?: Date; title?: string;
   description?: string;
   subtitle?: string;
   linkhref?: string;
   section: string;
   content?: any;
-  cover?: Media;
+  cover?: { data: Media };
 }
