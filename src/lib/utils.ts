@@ -18,8 +18,6 @@ export async function fetcher<T>(url: string, params?: RequestInit) {
       },
     });
 
-
-
     const resData = await response.json();
     const data = resData.data;
     const metadata = resData.meta
