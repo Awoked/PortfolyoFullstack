@@ -14,7 +14,7 @@ export async function fetcher<T>(url: string, params?: RequestInit) {
   try {
     const response = await fetch(`${config.strapiURL + url}`, {
       next: {
-        revalidate: 0
+        revalidate: 1,
       },
     });
 
