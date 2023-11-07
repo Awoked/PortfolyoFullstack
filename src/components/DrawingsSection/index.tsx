@@ -156,7 +156,7 @@ const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section_Plain
                             let cover = data.attributes.cover?.data?.attributes.url;
 
                             return <Image
-                                src={cover ? config.imageURL + cover : ""}
+                                src={cover ? cover : ""}
                                 width={1024}
                                 height={768}
                                 alt={data.attributes.alt ? data.attributes.alt : 'Alper Koşay / Çizimlerim'}

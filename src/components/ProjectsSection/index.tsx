@@ -108,7 +108,7 @@ const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section_Pl
                                 return <SwiperSlide key={index}>
 
                                     <ProjectCard
-                                        imageUrl={cover ? config.imageURL + cover : ""}
+                                        imageUrl={cover ? cover : ""}
                                         githubLink={project.attributes.githubLink}
                                         liveLink={project.attributes.liveLink}
                                         details={project.attributes.details}
