@@ -98,12 +98,13 @@ const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
 
                     <div className='w-full h-full lg:w-[500px] flex justify-end'>
                         {
+                            sectionData?.cover &&
                             <Image
-                                src="/images/peepocomfy-peepo.gif"
+                                src={sectionData.cover.attributes.url}
                                 className='-scale-x-100 peepo w-full h-full object-contain opacity-0'
                                 width={500}
                                 height={500}
-                                alt={"asd"}
+                                alt={sectionData.cover.attributes.alternativeText}
                             />
                         }
                     </div>

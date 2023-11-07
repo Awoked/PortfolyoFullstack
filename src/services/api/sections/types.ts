@@ -1,3 +1,5 @@
+import { Media } from "../types";
+
 
 export interface Section {
   id: number;
@@ -6,8 +8,9 @@ export interface Section {
     description?: string;
     subtitle?: string;
     linkhref?: string;
-    content?: any;
     section: string;
+    content?: any;
+    cover?: { data: Media };
   };
 }
 export interface Section_Plain {
@@ -15,6 +18,7 @@ export interface Section_Plain {
   description?: string;
   subtitle?: string;
   linkhref?: string;
-  content?: any;
   section: string;
+  content?: any;
+  cover?: Media;
 }
