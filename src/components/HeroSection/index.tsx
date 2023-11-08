@@ -6,12 +6,10 @@ import { Bounce, Circ, Elastic, Expo, Power3, Power4, gsap } from 'gsap';
 import { BsCaretDown } from "react-icons/bs";
 import styles from "./hero.module.css";
 import Image from 'next/image';
-import { Gallery, SectionData } from '@prisma/client';
-import { SectionType } from '@/app/api/sections/types';
-import { findGalleryKey } from '@/lib/utils';
+import { Section_Plain } from '@/services/api/sections/types';
 
 
-const HeroSection = ({ sectionData }: { sectionData?: SectionType }) => {
+const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
 
     // First Load Animations
     useEffect(() => {
@@ -65,7 +63,6 @@ const HeroSection = ({ sectionData }: { sectionData?: SectionType }) => {
         window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
     }
 
-
     return (
         <>
 
@@ -77,7 +74,7 @@ const HeroSection = ({ sectionData }: { sectionData?: SectionType }) => {
                     <div className='w-max'>
 
                         <p className={`title opacity-0 max-[320px]:text-[3rem] max-[375px]:text-[3.5rem] text-[4.5rem] md:text-[5rem] xl:text-[8rem] 2xl:text-[10rem] font-bold text-inherit`}>
-                            {sectionData?.subTitle}
+                            {sectionData?.subtitle}
                         </p>
 
                         <h1
@@ -93,21 +90,20 @@ const HeroSection = ({ sectionData }: { sectionData?: SectionType }) => {
                             }
                         </h1>
                         {
-                            sectionData?.content &&
-                            <div dangerouslySetInnerHTML={{ __html: sectionData.content }}></div>
+                            <div dangerouslySetInnerHTML={{ __html: sectionData?.content }}></div>
                         }
+
                     </div>
 
                     <div className='w-full h-full lg:w-[500px] flex justify-end'>
                         {
-                            sectionData?.Gallery &&
+                            sectionData?.cover &&
                             <Image
-                                // src="/images/peepocomfy-peepo.gif"
-                                src={findGalleryKey('secondaryKey', sectionData.Gallery)?.imageLinkHref as string}
+                                src={sectionData.cover.data.attributes.url}
                                 className='-scale-x-100 peepo w-full h-full object-contain opacity-0'
                                 width={500}
                                 height={500}
-                                alt={findGalleryKey('primaryKey', sectionData.Gallery)?.imageTitle as string}
+                                alt={sectionData.cover.data.attributes.alternativeText}
                             />
                         }
                     </div>
