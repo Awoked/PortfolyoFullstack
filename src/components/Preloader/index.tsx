@@ -1,21 +1,27 @@
+"use client"
 import gsap from 'gsap'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 const Preloader = () => {
 
-    const preloaderEl = useRef(null);
-    
-    useEffect(() =>{
+    const preloaderEl = useRef<HTMLDivElement>(null);
 
-        gsap.to(preloaderEl.current,{
-            autoAlpha: 0,
-            delay: 0.5  
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            gsap.to(preloaderEl.current, {
+                autoAlpha: 0,
+                delay: 1
+            })
         })
-    },[])
+
+        return () => ctx.revert();
+    }, [])
 
     return (
-        <div className='fixed inset-0 grid place-items-center bg-white z-10' ref={preloaderEl}>
+        <div
+            className='fixed inset-0 grid place-items-center bg-white z-50' ref={preloaderEl}
+        >
             <div>
                 <AiOutlineLoading3Quarters
                     size={50}

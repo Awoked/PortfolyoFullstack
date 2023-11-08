@@ -12,7 +12,6 @@ const findById = async (id: number) => {
 }
 
 
-
 export default {
     findMany,
     findById,

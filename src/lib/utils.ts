@@ -14,7 +14,7 @@ export async function fetcher<T>(url: string, params?: RequestInit) {
   try {
     const response = await fetch(`${config.strapiURL + url}`, {
       next: {
-        revalidate: 0,
+        revalidate: process.env.NODE_ENV === "production" ? 0 : 30,
       },
     });
 
@@ -31,3 +31,4 @@ export async function fetcher<T>(url: string, params?: RequestInit) {
     throw new Error("Sunucu hatası")
   }
 }
+

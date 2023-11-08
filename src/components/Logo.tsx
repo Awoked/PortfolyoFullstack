@@ -1,12 +1,15 @@
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import React from 'react'
 
 type Props = {
     variant?: "dark" | "light"
+    className?: string
 }
 
 const Logo = ({
-    variant = "dark"
+    variant = "dark",
+    className
 }: Props) => {
     return (
         <Image
@@ -14,7 +17,7 @@ const Logo = ({
             width={205}
             height={60}
             alt='Koşay'
-            className='w-full h-auto'
+            className={cn('h-auto', className)}
         />
     )
 }

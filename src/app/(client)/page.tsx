@@ -1,31 +1,30 @@
-import { Chivo_Mono } from 'next/font/google';
 
-import HeroSection from "@/components/HeroSection";
+import HeroSection from "@/components/Sections/Hero";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import DrawingsSection from "@/components/DrawingsSection";
 import ContactSection from "@/components/ContactSection";
 
-import { drawings, projects, sections, skillsList } from '@/services/api';
 
-const chivo_mono = Chivo_Mono({ subsets: ['latin'] })
+import api from '@/services/api';
+
 
 export default async function Home() {
 
 
-    const { data: hero, error } = await sections.findBySection("hero");
+    const { data: hero, error } = await api.sections.findBySection("hero");
 
-    const { data: about, error: aboutError } = await sections.findBySection("about");
+    const { data: about, error: aboutError } = await api.sections.findBySection("about");
 
-    const { data: skills, error: skillsError } = await sections.findBySection("skills");
-    const { data: skillsListData, error: skillsListError } = await skillsList.findMany();
+    const { data: skills, error: skillsError } = await api.sections.findBySection("skills");
+    const { data: skillsListData, error: skillsListError } = await api.skillsList.findMany();
 
-    const { data: projectsSection, error: projectsSectionError } = await sections.findBySection("projects");
-    const { data: projectsData, error: projectsError } = await projects.findMany();
+    const { data: projectsSection, error: projectsSectionError } = await api.sections.findBySection("projects");
+    const { data: projectsData, error: projectsError } = await api.projects.findMany();
 
-    const { data: drawingsData, error: drawingsError } = await sections.findBySection("drawings");
-    const { data: drawingsGalleryData, error: drawingsGalleryError } = await drawings.findMany();
+    const { data: drawingsData, error: drawingsError } = await api.sections.findBySection("drawings");
+    const { data: drawingsGalleryData, error: drawingsGalleryError } = await api.drawings.findMany();
 
 
     if (error) {
@@ -33,8 +32,7 @@ export default async function Home() {
     }
 
     return (
-        <main className={`${chivo_mono.className}`}>
-
+        <main>
             <HeroSection sectionData={hero[0].attributes} />
             <AboutSection sectionData={about[0].attributes} />
             <SkillsSection sectionData={skills[0].attributes} skillsList={skillsListData} />
