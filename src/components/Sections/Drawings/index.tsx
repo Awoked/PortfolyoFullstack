@@ -5,11 +5,13 @@ import { Expo, gsap } from 'gsap';
 import { Section } from '@/services/api/sections/types';
 import { Drawing } from '@/services/api/drawings/types';
 import SectionTitle from '@/components/ui/section-title';
+import Link from 'next/link';
+import { BiRightArrow } from 'react-icons/bi';
+import { ArrowRight } from 'lucide-react';
 
 const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section, drawings: Drawing[] }) => {
 
     useEffect(() => {
-        console.log(document.getElementById("cizimlerim")?.getBoundingClientRect().top)
         gsap.from(".drawings-section .gallery-wrapper img", {
             opacity: 0,
             scale: .7,
@@ -34,7 +36,7 @@ const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section, draw
 
             <div className="gallery-wrapper">
 
-                <div className='columns-1 sm:columns-2 md:columns-3 2xl:columns-4'>
+                <div className='columns-1 sm:columns-2 md:columns-3 2xl:columns-4 mb-8'>
                     {
                         drawings.length &&
                         drawings.map((data, index) => (
@@ -49,8 +51,15 @@ const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section, draw
                             />
                         ))
                     }
+
                 </div>
 
+                {
+                    drawings.length > 0 &&
+                    <Link href={"/drawings"} className='flex items-center gap-2 rounded-full py-1.5 px-4 border border-black mx-auto w-max'>
+                        Devamını Gör <ArrowRight />
+                    </Link>
+                }
             </div>
         </section>
     )
