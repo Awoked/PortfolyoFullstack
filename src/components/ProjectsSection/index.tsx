@@ -11,13 +11,13 @@ import ProjectCard from './ProjectCard';
 import { Expo, Power4, gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { Navigation } from 'swiper/modules';
-import { Section_Plain } from '@/services/api/sections/types';
+import { Section } from '@/services/api/sections/types';
 import { Project } from '@/services/api/projects/types';
 import config from '@/config';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section_Plain, projectData: Project[] }) => {
+const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section, projectData: Project[] }) => {
 
 
     const [projectsData, setProjectsData] = useState(projectData);
@@ -76,7 +76,7 @@ const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section_Pl
         <section className='py-8 projects-section'>
 
             <div className="section-title items-center gap-2">
-                <h2>{sectionData.title} </h2>
+                <h2>{sectionData.attributes.title} </h2>
                 <BiCodeAlt size={32} className='text-blue-600' />
             </div>
 

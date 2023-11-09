@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react';
 import { Expo, Power4, gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { Section_Plain } from '@/services/api/sections/types';
+import { Section, Section_Plain } from '@/services/api/sections/types';
 import { Drawing } from '@/services/api/drawings/types';
 import config from '@/config';
 
@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 
-const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section_Plain, drawings: Drawing[] }) => {
+const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section, drawings: Drawing[] }) => {
 
     // const [drawingsData, setDrawingsData] = useState([
     //     {
@@ -141,7 +141,7 @@ const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section_Plain
     return (
         <section id='cizimlerim' className='py-8 drawings-section'>
             <div className="section-title flex gap-3 items-center">
-                <h2>Çizimlerim</h2>
+                <h2>{sectionData.attributes.title}</h2>
                 <Image src={"/images/peepodraw.gif"} width={64} height={64} alt='peepo draw' />
             </div>
 

@@ -57,7 +57,7 @@ const Navbar = ({ navData }: { navData: Navigation[] }) => {
                     {
                         !!navData.length &&
                         navData.map((data, index) => (
-                            <DropdownMenuItem asChild>
+                            <DropdownMenuItem asChild key={index}>
                                 <Link href={data.attributes.href || '/'} title={data.attributes.title}>{data.attributes.title}</Link>
                             </DropdownMenuItem>
                         ))

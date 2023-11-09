@@ -1,17 +1,14 @@
 "use client"
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
 
-import { Power3, Bounce, Expo, gsap } from 'gsap';
+import { Power3, Expo, gsap } from 'gsap';
 
-import { BsCaretDown } from "react-icons/bs";
-import Image from 'next/image';
-import { Section_Plain } from '@/services/api/sections/types';
+import { Section } from '@/services/api/sections/types';
 import SplitType from "split-type"
-import { BiMouse } from 'react-icons/bi';
 
 import { TfiMouse } from "react-icons/tfi"
 
-const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
+const HeroSection = ({ sectionData }: { sectionData: Section }) => {
 
 
     const titleRef = useRef<HTMLHeadingElement>(null);
@@ -30,7 +27,7 @@ const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
             });
 
             tl.from(titleText.words, {
-                y:"120%",
+                y: "120%",
                 stagger: 0.30,
                 duration: 1,
                 ease: Power3.easeInOut
@@ -55,7 +52,7 @@ const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
 
 
     const ScrollDown = () => {
-        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+        window.scrollTo({ top: window.innerHeight - 100, behavior: 'smooth' });
     }
 
     return (
@@ -69,11 +66,11 @@ const HeroSection = ({ sectionData }: { sectionData?: Section_Plain }) => {
 
                             <div className="overflow-hidden">
                                 <h1 ref={titleRef} className={`title text-9xl py-2 font-bold mb-6`}>
-                                    {sectionData?.title}
+                                    {sectionData?.attributes.title}
                                 </h1>
                             </div>
                             <div className='overflow-hidden'>
-                                <div ref={contentRef} className='text-5xl font-medium content-reveal' dangerouslySetInnerHTML={{ __html: sectionData?.content }}></div>
+                                <div ref={contentRef} className='text-5xl font-medium content-reveal' dangerouslySetInnerHTML={{ __html: sectionData?.attributes.content }}></div>
                             </div>
                         </div>
 

@@ -15,9 +15,23 @@ const findBySection = async (sectionName: string) => {
     return await fetcher<Section[]>(`${endpoint}/?filters[section][$eq]=${sectionName}&populate=*`)
 }
 
+const filterSections = (sectinos: string[], sectionData: Section[]) => {
+    const sectionsObject: {
+        [key: string]: Section
+    } = {};
+
+    sectinos.forEach((section, _) => {
+        const newSection = sectionData.find(x => x.attributes.section === section)
+        if (newSection) {
+            sectionsObject[section] = newSection;
+        }
+    })
+    return sectionsObject
+}
 
 export default {
     findMany,
     findById,
-    findBySection
+    findBySection,
+    filterSections
 }

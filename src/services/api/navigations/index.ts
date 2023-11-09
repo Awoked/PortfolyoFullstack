@@ -4,7 +4,7 @@ import { Navigation } from "./types";
 const endpoint = "/navigations"
 
 const findMany = async () => {
-    return await fetcher<Navigation[]>(`${endpoint}?populate=*`);
+    return await fetcher<Navigation[]>(`${endpoint}?sort[0]=createdAt:asc`);
 }
 
 const findById = async (id: number) => {
