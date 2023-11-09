@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 const SkillsSection = ({ sectionData, skillsList }: { sectionData: Section, skillsList: SkillsList[] }) => {
 
     return (
-        <section className={`min-h-screen skills-section py-10 ${styles.background}`} id='yeteneklerim'>
+        <section className={`min-h-screen skills-section py-10 overflow-x-hidden ${styles.background}`} id='yeteneklerim'>
 
             <SectionTitle>
                 <h2>

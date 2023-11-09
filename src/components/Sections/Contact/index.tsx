@@ -105,7 +105,7 @@ const ContactSection = () => {
     }
 
     return (
-        <section className='contact-section py-14'>
+        <section className='contact-section py-14' id='iletisim'>
 
             <SectionTitle>
                 <h2>
