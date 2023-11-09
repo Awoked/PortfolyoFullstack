@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { sections } from '@/services/api'
 
 
 export const metadata: Metadata = {
