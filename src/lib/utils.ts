@@ -28,6 +28,7 @@ export async function fetcher<T>(url: string, params?: RequestInit) {
       error: resData.error ? true : false
     } as fetcherResponse<T>;
   } catch (error) {
+    console.log('error', error)
     throw new Error("Sunucu hatası")
   }
 }

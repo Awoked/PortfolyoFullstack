@@ -8,7 +8,7 @@ import SplitType from 'split-type'
 type ComponentProps = {
     children?: React.ReactNode
     className?: string
-  
+
 }
 const SectionTitle = ({ children, className, ...props }: ComponentProps) => {
     const sectionTitleRef = useRef<HTMLDivElement>(null);
@@ -18,7 +18,9 @@ const SectionTitle = ({ children, className, ...props }: ComponentProps) => {
         gsap.registerPlugin(ScrollTrigger)
 
         if (sectionTitleRef.current) {
-            const sectionTitle = new SplitType(sectionTitleRef.current);
+            const sectionTitle = new SplitType(sectionTitleRef.current, {
+                types: "chars,words"
+            });
 
             gsap.from(sectionTitle.words,
                 {
@@ -26,11 +28,12 @@ const SectionTitle = ({ children, className, ...props }: ComponentProps) => {
                     duration: 1,
                     stagger: 0.30,
                     y: "50%",
+                    delay: 0.1,
                     scrollTrigger: {
                         trigger: sectionTitleRef.current,
-                        start: "top bottom",
+                        start: "top 95%",
                         end: "bottom 60%",
-                        markers: true,
+                        scrub: 1,
                     },
                     ease: Power4.easeInOut,
 

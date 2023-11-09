@@ -69,7 +69,7 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
                                     {sectionData?.attributes.title}
                                 </h1>
                             </div>
-                            <div className='overflow-hidden'>
+                            <div className='overflow-hidden py-3'>
                                 <div ref={contentRef} className='text-5xl font-medium content-reveal' dangerouslySetInnerHTML={{ __html: sectionData?.attributes.content }}></div>
                             </div>
                         </div>

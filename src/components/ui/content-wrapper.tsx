@@ -27,11 +27,13 @@ const ContentWrapper = ({ children, className, ...props }: ComponentProps) => {
                 y: "200%",
                 stagger: 0.005,
                 duration: 0.8,
+                delay: 0.3,
+                
                 scrollTrigger: {
                     trigger: contentWrapperRef.current,
-                    start: "top bottom",
+                    start: "top 95%",
                     end: "bottom 70%",
-                    markers: true
+                    scrub: 1,
                 }
             })
         }

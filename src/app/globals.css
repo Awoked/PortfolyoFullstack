@@ -83,10 +83,6 @@ section{
   background: linear-gradient(0deg, rgba(154,154,154,0.47942927170868344) 0%, rgba(255,255,255,0) 44%);
 }
 
-.project-link{
-  @apply flex gap-2 items-center text-purple-800 hover:opacity-70 transition-opacity;
-}
-
 .contact-form-input{
   @apply border py-1.5 px-3 rounded-md outline-none focus:border-gray-600 hover:border-gray-600 transition-all;
 }

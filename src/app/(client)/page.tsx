@@ -1,11 +1,10 @@
 
 import HeroSection from "@/components/Sections/Hero";
 import AboutSection from "@/components/Sections/About";
-import SkillsSection from "@/components/SkillsSection";
-import ProjectsSection from "@/components/ProjectsSection";
-import DrawingsSection from "@/components/DrawingsSection";
-import ContactSection from "@/components/ContactSection";
-
+import SkillsSection from "@/components/Sections/Skills";
+import ProjectsSection from "@/components/Sections/Projects";
+import DrawingsSection from "@/components/Sections/Drawings";
+import ContactSection from "@/components/Sections/Contact";
 
 import api from '@/services/api';
 

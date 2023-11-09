@@ -1,5 +1,5 @@
 "use client"
-import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import React, { useEffect } from 'react'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
@@ -8,18 +8,23 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import emailjs from "@emailjs/browser";
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import SectionTitle from '@/components/ui/section-title';
 
 
-gsap.registerPlugin(ScrollTrigger);
 
 const ContactSection = () => {
 
+    const formInitialValues = {
+        "name": '',
+        "email": '',
+        "message": '',
+    }
+
+    type InitialValues = typeof formInitialValues
 
 
-    const FormValidate = values => {
-        const errors = {}
-
+    const FormValidate = (values: InitialValues) => {
+        const errors: Partial<Record<keyof InitialValues, string>> = {};
 
         if (!values.email) {
             errors.email = 'Email girmeniz zorunludur.';
@@ -46,29 +51,22 @@ const ContactSection = () => {
 
     useEffect(() => {
 
-        gsap.fromTo(".contact-section .form-group",
-            {
-                y: -40,
-                opacity: 0,
-
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                stagger: .25,
-                scrollTrigger: {
-                    trigger: ".contact-section",
-                    toggleActions: "restart none none none",
-                    start: "top 100%",
-                    end: "bottom 90%",
-                }
+        gsap.from(".contact-section .form-group", {
+            y: 40,
+            opacity: 1,
+            duration: 1,
+            stagger: .25,
+            scrollTrigger: {
+                trigger: ".contact-section",
+                start: "top bottom",
+                end: "bottom 80%",
+                scrub: 1,
             }
-        )
+        })
     }, []);
 
 
-    const handleContactSubmit = (values, actions) => {
+    const handleContactSubmit = (values: InitialValues, actions: FormikHelpers<InitialValues>) => {
         actions.setSubmitting(true);
 
 
@@ -109,13 +107,13 @@ const ContactSection = () => {
     return (
         <section className='contact-section py-14'>
 
-            <div className="section-title">
+            <SectionTitle>
                 <h2>
                     İletişim
                 </h2>
-            </div>
+            </SectionTitle>
 
-            <div className='container mx-auto'>
+            <div className='container'>
 
 
                 <article className='w-full md:w-1/2 mx-auto'>
@@ -123,11 +121,7 @@ const ContactSection = () => {
                     <div className="form-wrapper w-full">
 
                         <Formik
-                            initialValues={{
-                                "name": '',
-                                "email": '',
-                                "message": '',
-                            }}
+                            initialValues={formInitialValues}
                             onSubmit={handleContactSubmit}
                             validate={FormValidate}
                             validateOnSubmit={true}
@@ -140,7 +134,7 @@ const ContactSection = () => {
                                     <div className="form-inner flex flex-col gap-4">
                                         <div className="form-group">
                                             <label htmlFor="name">Adınız</label>
-                                            <Field  name="name" id="name" placeholder="Adınız" className="contact-form-input" />
+                                            <Field name="name" id="name" placeholder="Adınız" className="contact-form-input" />
                                             <div className="error">
                                                 <ErrorMessage name='name' />
                                             </div>
