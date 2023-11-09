@@ -11,13 +11,8 @@ const findById = async (id: number) => {
     return await fetcher<Project>(`${endpoint}/${id}`);
 }
 
-const findBySection = async (sectionName: string) => {
-    return await fetcher<Project[]>(`${endpoint}/?filters[section][$eq]=${sectionName}`)
-}
-
 
 export default {
     findMany,
     findById,
-    findBySection
 }
