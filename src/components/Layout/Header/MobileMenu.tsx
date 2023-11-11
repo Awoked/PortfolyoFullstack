@@ -32,7 +32,7 @@ const MobileMenu = ({ navData }: { navData: Navigation[] }) => {
     return (
         <React.Fragment>
 
-            <Button className='p-1 flex flex-col gap-2.5 text-4xl relative z-20' onClick={toggleActive}>
+            <Button className='p-1 flex flex-col gap-2.5 text-4xl relative z-20 max-lg:hidden' onClick={toggleActive}>
                 <BiMenu />
             </Button>
             {
