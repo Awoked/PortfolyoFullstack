@@ -12,17 +12,6 @@ import {
 import Link from 'next/link'
 
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-
-import { BiMenu } from 'react-icons/bi';
 import { Navigation } from '@/services/api/navigations/types';
 
 const Navbar = ({ navData }: { navData: Navigation[] }) => {
@@ -47,24 +36,6 @@ const Navbar = ({ navData }: { navData: Navigation[] }) => {
 
                 </NavigationMenuList>
             </NavigationMenu>
-
-
-            <DropdownMenu>
-                <DropdownMenuTrigger className='lg:hidden text-5xl'>
-                    <BiMenu />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className='mr-5'>
-                    {
-                        !!navData.length &&
-                        navData.map((data, index) => (
-                            <DropdownMenuItem asChild key={index}>
-                                <Link href={data.attributes.href || '/'} title={data.attributes.title}>{data.attributes.title}</Link>
-                            </DropdownMenuItem>
-                        ))
-                    }
-                </DropdownMenuContent>
-            </DropdownMenu>
-
 
         </React.Fragment>
     )

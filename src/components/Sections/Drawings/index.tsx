@@ -1,13 +1,14 @@
 "use client"
 import Image from 'next/image'
 import React, { useEffect } from 'react';
-import { Expo, gsap } from 'gsap';
+import { gsap } from 'gsap';
 import { Section } from '@/services/api/sections/types';
 import { Drawing } from '@/services/api/drawings/types';
 import SectionTitle from '@/components/ui/section-title';
-import Link from 'next/link';
-import { BiRightArrow } from 'react-icons/bi';
 import { ArrowRight } from 'lucide-react';
+import DrawingsGrid from './DrawingsGrid';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section, drawings: Drawing[] }) => {
 
@@ -25,7 +26,7 @@ const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section, draw
             }
         })
     }, []);
-
+    
     return (
         <section id='cizimlerim' className='py-8 drawings-section'>
 
@@ -36,29 +37,20 @@ const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section, draw
 
             <div className="gallery-wrapper">
 
-                <div className='columns-1 sm:columns-2 md:columns-3 2xl:columns-4 mb-8'>
-                    {
-                        drawings.length &&
-                        drawings.map((data, index) => (
-                            index < 6 &&
-                            <Image
-                                src={data.attributes.cover?.data?.attributes.url || ""}
-                                width={1024}
-                                height={768}
-                                alt={data.attributes.alt || 'Alper Koşay / Çizimlerim'}
-                                className='w-full h-auto mb-2'
-                                key={index}
-                            />
-                        ))
-                    }
-
-                </div>
+                <DrawingsGrid
+                    drawingsData={drawings}
+                    showCount={6}
+                />
 
                 {
                     drawings.length > 0 &&
-                    <Link href={"/drawings"} className='flex items-center gap-2 rounded-full py-1.5 px-4 border border-black mx-auto w-max'>
-                        Devamını Gör <ArrowRight />
-                    </Link>
+                    <div className='flex justify-center'>
+                        <Button asChild className='gap-2' >
+                            <Link href={"/cizimlerim"}>
+                                Tümünü Gör <ArrowRight size={18} />
+                            </Link>
+                        </Button>
+                    </div>
                 }
             </div>
         </section>

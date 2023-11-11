@@ -17,6 +17,7 @@ const Logo = ({
             width={205}
             height={60}
             alt='Koşay'
+            priority
             className={cn('h-auto', className)}
         />
     )

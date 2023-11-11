@@ -12,7 +12,6 @@ export default async function RootLayout({
 
   return (
     <Layout navData={navData}>
-      <Preloader />
       {children}
     </Layout>
   )

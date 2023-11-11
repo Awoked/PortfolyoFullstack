@@ -27,10 +27,10 @@ export default async function Home() {
 
     const { data: drawingsGalleryData, error: drawingsGalleryError } = await api.drawings.findMany();
 
-
+    // await new Promise(resolve => setTimeout(resolve, 5000))
 
     return (
-        <main>
+        <main className="min-h-screen">
             <HeroSection sectionData={hero} />
             <AboutSection sectionData={about} />
             <SkillsSection sectionData={skills} skillsList={skillsListData} />
