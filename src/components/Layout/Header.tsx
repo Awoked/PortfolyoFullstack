@@ -30,7 +30,7 @@ const Header = ({ navData }: { navData: Navigation[] }) => {
     }, [scrollCount])
 
     return (
-        <header ref={headerRef} className={cn('absolute left-0 top-0 w-full py-4 z-20 backdrop-blur-sm', isFixed && "fixed")}>
+        <header ref={headerRef} className={cn('absolute left-0 top-0 w-full py-4 z-20 backdrop-blur-sm bg-white bg-opacity-90', isFixed && "fixed")}>
             <div className="container flex justify-between items-center">
                 <Link href={"/"} title='Alper Koşay'>
                     <Logo className='max-w-[150px]' />

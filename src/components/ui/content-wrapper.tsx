@@ -22,18 +22,21 @@ const ContentWrapper = ({ children, className, ...props }: ComponentProps) => {
 
             const contentWrapperContent = new SplitType(contentWrapperRef.current);
 
+            gsap.set(contentWrapperRef.current, {
+                opacity: 1
+            })
             gsap.from(contentWrapperContent.words, {
                 opacity: 0,
                 y: "200%",
                 stagger: 0.005,
                 duration: 0.8,
                 delay: 0.3,
-                
+
                 scrollTrigger: {
                     trigger: contentWrapperRef.current,
-                    start: "top 95%",
+                    start: "top 90%",
                     end: "bottom 70%",
-                    scrub: 1,
+                    // scrub: 1,
                 }
             })
         }
@@ -41,7 +44,7 @@ const ContentWrapper = ({ children, className, ...props }: ComponentProps) => {
     }, [])
 
     return (
-        <div ref={contentWrapperRef} className={cn('content-wrapper', className)} {...props}>
+        <div ref={contentWrapperRef} className={cn('content-wrapper opacity-0', className)} {...props}>
             {children}
         </div>
     )

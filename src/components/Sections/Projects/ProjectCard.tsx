@@ -11,7 +11,7 @@ const ProjectCard = ({ cardData }: { cardData: Project }) => {
 
             <div className="project-cover max-h-[300px] overflow-hidden">
                 <Image
-                    src={cardData.attributes.cover?.data.attributes.url || ''}
+                    src={cardData.attributes.cover?.data?.attributes.url || ''}
                     className='w-full h-full object-cover group-hover:scale-105 transition-transform druation-500'
                     width={300}
                     height={500}

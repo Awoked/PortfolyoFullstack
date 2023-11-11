@@ -18,37 +18,49 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
 
     // First Load Animations
     useLayoutEffect(() => {
-        const titleText = new SplitType(titleRef.current || "");
-        const contentText = new SplitType(contentRef.current || "");
+        if (titleRef.current && contentRef.current) {
+            const titleText = new SplitType(titleRef.current);
+            const contentText = new SplitType(contentRef.current);
 
-        let ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                delay: 1.1
-            });
+            let ctx = gsap.context(() => {
+                const tl = gsap.timeline({
+                    // delay: 1.1
+                });
 
-            tl.from(titleText.words, {
-                y: "120%",
-                stagger: 0.30,
-                duration: 1,
-                ease: Power3.easeInOut
+                gsap.set(titleRef.current, {
+                    opacity: 1
+                })
+                tl.from(titleText.words, {
+                    y: "120%",
+                    stagger: 0.30,
+                    duration: 1,
+                    ease: Power3.easeInOut
+                })
+
+                gsap.set(contentRef.current, {
+                    opacity: 1
+                })
+                tl.from(contentText.chars, {
+                    opacity: 0,
+                    y: 65,
+                    stagger: 0.04,
+                    duration: 0.7,
+                    ease: Expo.easeOut,
+                })
+
+                gsap.set(scrollDownRef.current, {
+                    opacity: 1
+                })
+                tl.from(scrollDownRef.current, {
+                    autoAlpha: 0,
+                    duration: 1,
+                })
             })
 
-            tl.from(contentText.chars, {
-                opacity: 0,
-                y: 65,
-                stagger: 0.04,
-                duration: 0.7,
-                ease: Expo.easeOut,
-            })
-
-            tl.from(scrollDownRef.current, {
-                autoAlpha: 0,
-                duration: 1,
-            })
-        })
-
-        return () => ctx.revert();
+            return () => ctx.revert();
+        }
     }, [])
+
 
 
     const ScrollDown = () => {
@@ -65,18 +77,18 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
                         <div className='flex flex-col justify-center text-center'>
 
                             <div className="overflow-hidden">
-                                <h1 ref={titleRef} className={`title text-9xl py-2 font-bold mb-6`}>
+                                <h1 ref={titleRef} className={`title text-9xl py-2 font-bold mb-6 opacity-0`}>
                                     {sectionData?.attributes.title}
                                 </h1>
                             </div>
                             <div className='overflow-hidden py-3'>
-                                <div ref={contentRef} className='text-5xl font-medium content-reveal' dangerouslySetInnerHTML={{ __html: sectionData?.attributes.content }}></div>
+                                <div ref={contentRef} className='text-5xl font-medium content-reveal opacity-0' dangerouslySetInnerHTML={{ __html: sectionData?.attributes.content }}></div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div ref={scrollDownRef} className='absolute bottom-0 md:bottom-20 left-1/2 -translate-x-1/2'>
+                <div ref={scrollDownRef} className='absolute bottom-0 md:bottom-20 left-1/2 -translate-x-1/2 opacity-0'>
                     <button
                         className="p-3 animate-bounce"
                         onClick={ScrollDown}

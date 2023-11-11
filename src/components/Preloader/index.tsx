@@ -8,24 +8,8 @@ import { Progress } from "@/components/ui/progress"
 
 const Preloader = () => {
 
-    const [progressVal, setProgressVal] = useState<number>(20);
     const preloaderEl = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        setProgressVal(60);
-
-        setTimeout(() => {
-            setProgressVal(100);
-        }, 500);
-        let ctx = gsap.context(() => {
-            gsap.to(preloaderEl.current, {
-                autoAlpha: 0,
-                delay: 1
-            })
-        })
-
-        return () => ctx.revert();
-    }, [])
 
     return (
         <div
@@ -36,8 +20,6 @@ const Preloader = () => {
                     size={50}
                     className='animate-spin'
                 />
-                <Progress value={progressVal} className='rounded-full h-2 w-full' />
-
             </div>
         </div>
     )
