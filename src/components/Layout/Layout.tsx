@@ -3,7 +3,7 @@ import React from 'react'
 import Footer from './Footer';
 
 import { Chivo_Mono } from 'next/font/google';
-import Header from './Header';
+import Header from './Header/Header';
 import { Navigation } from '@/services/api/navigations/types';
 const chivo_mono = Chivo_Mono({
     subsets: ['latin'], weight: [

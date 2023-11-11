@@ -77,18 +77,18 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
                         <div className='flex flex-col justify-center text-center'>
 
                             <div className="overflow-hidden">
-                                <h1 ref={titleRef} className={`title text-9xl py-2 font-bold mb-6 opacity-0`}>
+                                <h1 ref={titleRef} className={`title text-6xl md:text-9xl md:py-2 font-bold mb-4 md:mb-6 opacity-0`}>
                                     {sectionData?.attributes.title}
                                 </h1>
                             </div>
                             <div className='overflow-hidden py-3'>
-                                <div ref={contentRef} className='text-5xl font-medium content-reveal opacity-0' dangerouslySetInnerHTML={{ __html: sectionData?.attributes.content }}></div>
+                                <div ref={contentRef} className='text-3xl md:text-5xl font-medium content-reveal opacity-0' dangerouslySetInnerHTML={{ __html: sectionData?.attributes.content }}></div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div ref={scrollDownRef} className='absolute bottom-0 md:bottom-20 left-1/2 -translate-x-1/2 opacity-0'>
+                <div ref={scrollDownRef} className='absolute bottom-10 md:bottom-20 left-1/2 -translate-x-1/2 opacity-0'>
                     <button
                         className="p-3 animate-bounce"
                         onClick={ScrollDown}

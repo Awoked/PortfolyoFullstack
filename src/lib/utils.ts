@@ -7,11 +7,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-// interface fetcherResponse<T> {
-//   data: T;
-//   metadata:
-// }
-
 export interface Payload<T> {
   data: T;
   meta: Meta

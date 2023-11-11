@@ -45,7 +45,7 @@ const DrawingsSection = ({ sectionData, drawings }: { sectionData: Section, draw
                 {
                     drawings.length > 0 &&
                     <div className='flex justify-center'>
-                        <Button asChild >
+                        <Button asChild className='gap-2' >
                             <Link href={"/cizimlerim"}>
                                 Tümünü Gör <ArrowRight size={18} />
                             </Link>
