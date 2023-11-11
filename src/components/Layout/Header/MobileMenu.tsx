@@ -44,7 +44,7 @@ const MobileMenu = ({ navData }: { navData: Navigation[] }) => {
                             {
                                 navData.length &&
                                 navData.map((data, index) => (
-                                    <li onClick={toggleActive}>
+                                    <li onClick={toggleActive} key={index}>
                                         <Link
                                             href={data.attributes.href || '/'}
                                             title={data.attributes.title}

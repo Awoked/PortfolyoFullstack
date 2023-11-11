@@ -50,7 +50,7 @@ const Pagination = ({ meta }: { meta: Meta }) => {
                         let page = index + 1;
                         let isCurrentPage = page === pagination.page
                         return (
-                            <li className={`${isCurrentPage ? "font-bold" : "font-medium"}`}>
+                            <li key={index} className={`${isCurrentPage ? "font-bold" : "font-medium"}`}>
                                 <Button asChild variant={isCurrentPage ? "default" : "outline"}>
                                     <Link href={{ pathname, query: `page=${page}` }}>
                                         {page}
