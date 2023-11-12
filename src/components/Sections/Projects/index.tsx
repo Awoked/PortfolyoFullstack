@@ -9,6 +9,7 @@ import { Section } from '@/services/api/sections/types';
 import { Project } from '@/services/api/projects/types';
 import SectionTitle from '@/components/ui/section-title';
 import ProjectCard from './ProjectCard';
+import { Button } from '@/components/ui/button';
 
 const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section, projectData: Project[] }) => {
 
@@ -43,7 +44,7 @@ const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section, p
             <SectionTitle>
                 <h2 className='!flex items-center gap-2'>
                     {sectionData.attributes.title}
-                    <BiCodeAlt size={32} className='text-blue-600' />
+                    <BiCodeAlt size={32} className='text-primary' />
                 </h2>
             </SectionTitle>
 
@@ -75,13 +76,13 @@ const ProjectsSection = ({ sectionData, projectData }: { sectionData: Section, p
                             </SwiperSlide>
                         ))
                     }
-                    <div className="py-10 flex items-center justify-center gap-3 text-4xl text-black">
-                        <button ref={sliderPrev}>
-                            <BiChevronLeft />
-                        </button>
-                        <button ref={sliderNext}>
-                            <BiChevronRight />
-                        </button>
+                    <div className="py-10 flex items-center justify-center gap-3 text-4xl">
+                        <Button ref={sliderPrev} size={"icon"}>
+                            <BiChevronLeft size={30} />
+                        </Button>
+                        <Button ref={sliderNext} size={"icon"}>
+                            <BiChevronRight size={30} />
+                        </Button>
                     </div>
                 </Swiper>
             </div>

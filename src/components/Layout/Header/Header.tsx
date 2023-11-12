@@ -8,6 +8,7 @@ import useScroll from '@/hooks/useScroll'
 import { cn } from '@/lib/utils'
 import gsap from 'gsap'
 import MobileMenu from './MobileMenu'
+import ThemeToggler from '@/components/ui/theme-toggler'
 
 const Header = ({ navData }: { navData: Navigation[] }) => {
     const headerRef = useRef<HTMLElement>(null);
@@ -31,14 +32,16 @@ const Header = ({ navData }: { navData: Navigation[] }) => {
     }, [scrollCount])
 
     return (
-        <header ref={headerRef} className={cn('absolute left-0 top-0 w-full py-4 z-20 backdrop-blur-sm bg-white bg-opacity-90', isFixed && "fixed")}>
+        <header ref={headerRef} className={cn('absolute left-0 top-0 w-full py-4 z-20 backdrop-blur-sm bg-white dark:bg-black dark:bg-opacity-50 bg-opacity-50', isFixed && "fixed")}>
             <div className="container flex justify-between items-center">
                 <Link href={"/"} title='Alper Koşay' className='relative z-20'>
                     <Logo className='max-w-[150px]' />
                 </Link>
-                <Navbar navData={navData} />
-
-                <MobileMenu navData={navData} />
+                <div className='flex items-center gap-2 '>
+                    <Navbar navData={navData} />
+                    <ThemeToggler />
+                    <MobileMenu navData={navData} />
+                </div>
             </div>
         </header>
     )

@@ -69,7 +69,6 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
 
     return (
         <>
-
             <section className={`relative overflow-hidden`}>
                 <div className="container">
                     <div className="flex justify-center items-center h-[100svh]">

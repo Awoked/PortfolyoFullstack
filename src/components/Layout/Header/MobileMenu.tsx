@@ -38,7 +38,7 @@ const MobileMenu = ({ navData }: { navData: Navigation[] }) => {
             {
                 isActive &&
 
-                <div className='fixed inset-0 h-screen z-10 bg-white bg-opacity-90 backdrop-blur-md pt-24'>
+                <div className='fixed inset-0 h-screen z-10 bg-background bg-opacity-90 backdrop-blur-md pt-32'>
                     <div className="container h-full">
                         <ul className='space-y-2 h-full pb-2 overflow-y-auto' ref={navigationListRef}>
                             {
@@ -48,7 +48,7 @@ const MobileMenu = ({ navData }: { navData: Navigation[] }) => {
                                         <Link
                                             href={data.attributes.href || '/'}
                                             title={data.attributes.title}
-                                            className='py-2 inline-block text-3xl font-semibold'
+                                            className='py-4 inline-block text-3xl font-semibold'
                                         >
                                             {data.attributes.title}
                                         </Link>
