@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,12 +15,6 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        "color-1": "#1e1e1e",
-        "color-dashboard-text": "#080906",
-        "dashboard-background": "#F3F4F0",
-        "dashboard-primary": "#95DBFE",
-        "dashboard-secondary": "#DBD0DD",
-        "dashboard-accent": "#B62F89",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -78,8 +73,6 @@ const config: Config = {
       padding: "1.5rem",
       center: true,
     },
-
-
   },
   plugins: [require("tailwindcss-animate")],
 };

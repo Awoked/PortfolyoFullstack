@@ -36,7 +36,7 @@ const ProjectCard = ({ cardData }: { cardData: Project }) => {
                 }
                 {
                     cardData.attributes.liveLink &&
-                    <ProjectLink href={cardData.attributes.liveLink} className='text-blue-700'>
+                    <ProjectLink href={cardData.attributes.liveLink}>
                         Canlı İncele
                         <TbWorldWww size={26} />
                     </ProjectLink>

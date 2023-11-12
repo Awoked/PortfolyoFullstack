@@ -1,6 +1,6 @@
 "use client"
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 
@@ -9,10 +9,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import emailjs from "@emailjs/browser";
 import { gsap } from 'gsap';
 import SectionTitle from '@/components/ui/section-title';
+import { Button } from '@/components/ui/button';
 
 
 
 const ContactSection = () => {
+
+    const contactFormWrapper = useRef<HTMLDivElement>(null);
 
     const formInitialValues = {
         "name": '',
@@ -50,19 +53,21 @@ const ContactSection = () => {
 
 
     useEffect(() => {
+        if (contactFormWrapper.current) {
 
-        gsap.from(".contact-section .form-group", {
-            y: 40,
-            opacity: 1,
-            duration: 1,
-            stagger: .25,
-            scrollTrigger: {
-                trigger: ".contact-section",
-                start: "top bottom",
-                end: "bottom 80%",
-                scrub: 1,
-            }
-        })
+            gsap.from(contactFormWrapper.current.children, {
+                y: 40,
+                opacity: 1,
+                duration: 1,
+                stagger: .25,
+                scrollTrigger: {
+                    trigger: contactFormWrapper.current,
+                    start: "top 80%",
+                    end: "center 80%",
+                    scrub: 1,
+                }
+            })
+        }
     }, []);
 
 
@@ -131,7 +136,7 @@ const ContactSection = () => {
                             {({ isSubmitting }) => (
                                 <Form>
 
-                                    <div className="form-inner flex flex-col gap-4">
+                                    <div className="form-inner flex flex-col gap-4" ref={contactFormWrapper}>
                                         <div className="form-group">
                                             <label htmlFor="name">Adınız</label>
                                             <Field name="name" id="name" placeholder="Adınız" className="contact-form-input" />
@@ -148,13 +153,13 @@ const ContactSection = () => {
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="message">Mesaj</label>
-                                            <Field name="message" id="message" as="textarea" placeholder="Mesajınız..." className="contact-form-input h-full" />
+                                            <Field name="message" id="message" as="textarea" placeholder="Mesajınız..." className="contact-form-input h-full min-h-[150px]" />
                                             <div className="error">
                                                 <ErrorMessage name='message' />
                                             </div>
 
                                         </div>
-                                        <button type='submit' disabled={isSubmitting ? true : false} className='button-filled-v1 disabled:bg-indigo-600 disabled:hover:bg-white disabled:cursor-not-allowed' >
+                                        <Button type='submit' disabled={isSubmitting}>
                                             {
                                                 isSubmitting ?
                                                     (
@@ -172,7 +177,7 @@ const ContactSection = () => {
                                                         <span>Gönder</span>
                                                     )
                                             }
-                                        </button>
+                                        </Button>
                                     </div>
                                     <ToastContainer
 

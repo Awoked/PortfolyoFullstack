@@ -18,7 +18,7 @@ const AboutSection = ({ sectionData }: { sectionData: Section }) => {
 
             <div className="container">
                 <ContentWrapper>
-                    <div 
+                    <div
                         dangerouslySetInnerHTML={{ __html: sectionData.attributes.content }}
                     ></div>
                 </ContentWrapper>

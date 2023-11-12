@@ -3,7 +3,7 @@ import { AiFillGithub } from "react-icons/ai";
 
 const Footer = () => {
     return (
-        <footer className={`py-8 border-t footer-background text-black`}>
+        <footer className={`py-8 border-t`}>
 
             <div className="container mx-auto">
                 <div className="inner flex gap-y-6 flex-wrap items-center justify-between">

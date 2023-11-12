@@ -37,9 +37,9 @@ const SkillCard = ({ skillData, index }: {
     return (
         <div
             ref={skillCardRef}
-            className={`w-full skill-card shadow-lg before:bg-blue-300 after:bg-blue-400 shadow-black ${styles.card}`}
+            className={`w-full skill-card shadow-lg before:border before:border-primary before:bg-card after:bg-card shadow-card after:border after:border-primary ${styles.card}`}
         >
-            <div className={`skill-card-inner bg-blue-300 p-3 h-full`}>
+            <div className={`skill-card-inner bg-card border border-primary p-3 h-full`}>
                 <div className="card-header flex justify-between items-baseline pb-2">
                     <h3 className="skill-name font-semibold text-lg xl:text-xl">
                         {skillData.attributes.title}
@@ -51,7 +51,7 @@ const SkillCard = ({ skillData, index }: {
                 </div>
                 <div className="skill-level">
                     <div className="level w-full h-2 rounded-md border overflow-hidden">
-                        <div className={`inner bg-red-500 rounded-md h-full`} style={{ width: `${skillData.attributes.level}%` }}>
+                        <div className={`inner bg-primary rounded-md h-full`} style={{ width: `${skillData.attributes.level}%` }}>
                         </div>
                     </div>
                 </div>

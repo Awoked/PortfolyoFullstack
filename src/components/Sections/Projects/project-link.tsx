@@ -17,7 +17,7 @@ const ProjectLink = ({
         <a
             href={href}
             target={target}
-            className={cn('flex gap-2 items-center text-purple-800 hover:opacity-70 transition-opacity', className)}
+            className={cn('flex gap-2 items-center  hover:opacity-70 transition-opacity', className)}
         >
             {children}
         </a>
