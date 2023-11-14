@@ -13,23 +13,21 @@ export interface Payload<T> {
   error: boolean;
 }
 
-export async function fetcher<T>(url: string, params?: RequestInit) {
+export async function fetcher<T>(url: string, params?: RequestInit): Promise<Payload<T>> {
   try {
     const response = await fetch(`${config.strapiURL + url}`, {
       next: {
-        revalidate: process.env.NODE_ENV === "production" ? 0 : 0,
+        revalidate: 10,
       },
+      ...params,
     });
-
-    const resData = await response.json();
-    const data = resData.data;
-    const meta = resData.meta
+    const { data, meta, error }: Payload<T> = await response.json();
 
     return {
       data,
       meta,
-      error: resData.error ? true : false
-    } as Payload<T>;
+      error: error ? true : false
+    }
   } catch (error) {
     console.log('error', error)
     throw new Error("Sunucu hatası")
