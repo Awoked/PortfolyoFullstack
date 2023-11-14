@@ -7,6 +7,13 @@ import React from 'react'
 import { Url } from 'url';
 import { Button } from './button';
 
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 
 type PaginationLinkType = {
     href: Partial<Url>
@@ -18,7 +25,7 @@ const PaginationLink = ({ href, children, className, disabled }: PaginationLinkT
 
     return (
         <Button disabled={disabled} asChild>
-            <Link href={href} className={disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : ''}>
+            <Link href={href} className={disabled ? 'pointer-events-none !cursor-not-allowed opacity-50' : ''}>
                 {children}
             </Link>
         </Button>
@@ -33,43 +40,67 @@ const Pagination = ({ meta }: { meta: Meta }) => {
     return (
         !!pagination &&
         <div className='flex justify-center py-4'>
+            <TooltipProvider>
 
-            <ul className='flex gap-2 flex-wrap items-center'>
+                <ul className='flex gap-2 flex-wrap items-center'>
 
-                <li>
-                    <PaginationLink
-                        href={{ pathname, query: `page=${pagination.page - 1}` }}
-                        disabled={pagination.page === 1}
-                    >
-                        Geri
-                    </PaginationLink>
-                </li>
+                    <li>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <PaginationLink
+                                    href={{ pathname, query: `page=${pagination.page - 1}` }}
+                                    disabled={pagination.page === 1}
+                                >
+                                    Geri
+                                </PaginationLink>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Önceki sayfaya git</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </li>
 
-                {
-                    [...Array(pagination.pageCount)].map((data, index) => {
-                        let page = index + 1;
-                        let isCurrentPage = page === pagination.page
-                        return (
-                            <li key={index} className={`${isCurrentPage ? "font-bold" : "font-medium"}`}>
-                                <Button asChild variant={isCurrentPage ? "default" : "outline"}>
-                                    <Link href={{ pathname, query: `page=${page}` }}>
-                                        {page}
-                                    </Link>
-                                </Button>
-                            </li>
-                        )
-                    })
-                }
-                <li>
-                    <PaginationLink
-                        href={{ pathname, query: `page=${pagination.page + 1}` }}
-                        disabled={pagination.page === pagination.pageCount}
-                    >
-                        İleri
-                    </PaginationLink>
-                </li>
+                    {
+                        [...Array(pagination.pageCount)].map((data, index) => {
+                            let page = index + 1;
+                            let isCurrentPage = page === pagination.page
+                            return (
+                                <li key={index} className={`${isCurrentPage ? "font-bold" : "font-medium"}`}>
 
-            </ul>
+                                    <Tooltip>
+                                        <TooltipTrigger>
+                                            <Button asChild variant={isCurrentPage ? "outline" : "default"}>
+                                                <Link href={{ pathname, query: `page=${page}` }}>
+                                                    {page}
+                                                </Link>
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>{isCurrentPage ? "Mevcut sayfa" : `Sayfa ${page}`}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </li>
+                            )
+                        })
+                    }
+                    <li>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <PaginationLink
+                                    href={{ pathname, query: `page=${pagination.page + 1}` }}
+                                    disabled={pagination.page === pagination.pageCount}
+                                >
+                                    İleri
+                                </PaginationLink>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Sonraki sayfaya git</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </li>
+
+                </ul>
+            </TooltipProvider>
 
         </div >
     )
