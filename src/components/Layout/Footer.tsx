@@ -23,7 +23,7 @@ const Footer = () => {
                             Linkedin
                         </Link>
                         <Link
-                            href={"https://github.com/Awoked"}
+                            href={"https://github.com/alperkosay"}
                             target='_blank'
                             className='w-max flex items-end gap-2 hover:opacity-90'
                         >
