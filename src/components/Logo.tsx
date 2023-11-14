@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils'
-import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import React from 'react'
 
@@ -13,9 +12,6 @@ const Logo = ({
     className
 }: Props) => {
 
-    const themeParams = useTheme();
-
-    console.log('themeParams', themeParams)
     return (
         <React.Fragment>
             <Image
