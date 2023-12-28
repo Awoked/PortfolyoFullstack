@@ -43,3 +43,10 @@ export interface Meta {
     total: number;
   }
 }
+
+
+
+export type Endpoint = {
+  singular: string;
+  plural: string;
+};

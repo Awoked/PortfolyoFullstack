@@ -1,18 +1,14 @@
 import { fetcher } from "@/lib/utils"
 import { Project } from "./types";
-
-const endpoint = "/projects"
-
-const findMany = async () => {
-    return await fetcher<Project[]>(`${endpoint}?populate=*`);
-}
-
-const findById = async (id: number) => {
-    return await fetcher<Project>(`${endpoint}/${id}`);
-}
+import { ApiService } from "../core";
 
 
-export default {
-    findMany,
-    findById,
-}
+
+class ProjectService extends ApiService<Project>{ }
+
+const service = new ProjectService({
+    singular: "/project",
+    plural: "/projects"
+})
+
+export default service;
