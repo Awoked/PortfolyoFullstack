@@ -2,6 +2,9 @@
 import React, { useEffect, useRef } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
+import { Mars } from "./Mars";
+import Moon from "./Moon";
+import UnicornNew from "./UnicornNew";
 
 import EarthDayMap from "@/assets/textures/8k_earth_daymap.jpg";
 import EarthClouds from "@/assets/textures/8k_earth_clouds.jpg";
@@ -34,15 +37,16 @@ function Globe() {
 
     earthRef.current.rotation.y = elapsedTime / 8;
     cloudsRef.current.rotation.y = elapsedTime / 7.6;
+
     starsRef.current.rotation.y = elapsedTime / 42;
   });
 
   useEffect(() => {
     setTimeout(() => {
       gsap.to(globeRef.current.scale, {
-        x: 0.6,
-        y: 0.6,
-        z: 0.6,
+        x: 0.7,
+        y: 0.7,
+        z: 0.7,
         scrollTrigger: {
           trigger: ".about-section",
           start: "top 90%",
@@ -96,6 +100,11 @@ export default function WorldCanvas() {
     <>
       <div className="relative w-full h-full">
         <Canvas className="w-max h-max absolute left-0">
+          {/* <Blackholenew /> */}
+          {/* <Starship /> */}
+          <UnicornNew />
+          <Mars />
+          <Moon />
           <Globe />
         </Canvas>
       </div>
