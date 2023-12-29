@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import { Chivo_Mono } from "next/font/google";
 import Header from "./Header/Header";
 import { Navigation } from "@/services/api/navigations/types";
+import { Toaster } from "../ui/toaster";
 const chivo_mono = Chivo_Mono({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -35,6 +36,8 @@ const Layout = ({
         <Header navData={navData} />
         {children}
         <Footer />
+
+        <Toaster />
       </div>
     </React.Fragment>
   );

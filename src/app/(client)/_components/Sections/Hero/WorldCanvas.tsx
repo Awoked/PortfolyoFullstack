@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import React, { useEffect, useRef } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 
 import EarthDayMap from "@/assets/textures/8k_earth_daymap.jpg";
@@ -9,7 +9,7 @@ import EarthNightMap from "@/assets/textures/8k_earth_nightmap.jpg";
 import EarthNormalMap from "@/assets/textures/8k_earth_normal_map.jpg";
 import EarthSpecularMap from "@/assets/textures/8k_earth_specular_map.jpg";
 
-import { TextureLoader, DoubleSide } from "three";
+import { TextureLoader, DoubleSide, Mesh, Group } from "three";
 import gsap from "gsap";
 
 function Globe() {
@@ -23,10 +23,10 @@ function Globe() {
       EarthNightMap.src,
     ]
   );
-  const earthRef = useRef<any>(null);
-  const cloudsRef = useRef<any>(null);
-  const starsRef = useRef<any>(null);
-  const globeRef = useRef<any>(null);
+  const earthRef = useRef<Mesh>(null!);
+  const cloudsRef = useRef<Mesh>(null!);
+  const starsRef = useRef<any>(null!);
+  const globeRef = useRef<Group>(null!);
   const isMobile = matchMedia("(max-width:1023px)").matches;
 
   useFrame(({ clock }) => {
