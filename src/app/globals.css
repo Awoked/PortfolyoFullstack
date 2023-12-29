@@ -2,24 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html {
   font-size: 84%;
 }
 
-@media (min-width:512px) {
+@media (min-width: 512px) {
   html {
     font-size: 86%;
   }
 }
 
-@media (min-width:768px) {
+@media (min-width: 768px) {
   html {
     font-size: 90%;
   }
 }
 
-@media (min-width:1300px) {
+@media (min-width: 1300px) {
   html {
     font-size: 100%;
   }
@@ -77,9 +76,9 @@ section {
   }
 } */
 
-
 @layer base {
   :root {
+    scroll-behavior: auto !important;
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
@@ -101,7 +100,7 @@ section {
     --ring: 262.1 83.3% 57.8%;
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
@@ -125,7 +124,6 @@ section {
   }
 }
 
-
 .contact-form-input {
   @apply border py-1.5 px-3 rounded-md outline-none focus:border-gray-600 hover:border-gray-600 transition-all;
 }
@@ -141,11 +139,6 @@ section {
 .form-group .error {
   @apply text-xs font-light text-red-500;
 }
-
-
-
-
-
 
 .content-wrapper a {
   @apply font-semibold text-blue-700 hover:text-blue-400 transition-colors;

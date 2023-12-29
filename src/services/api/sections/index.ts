@@ -1,37 +1,30 @@
 import { fetcher } from "@/lib/utils"
 import { Section } from "./types";
+import { ApiService } from "../core";
 
-const endpoint = "/sections"
+class SectionService extends ApiService<Section>{
+    async findBySection(sectionName: string) {
+        return await fetcher<Section[]>(`${this.endpoint.plural}/?filters[section][$eq]=${sectionName}&populate=*`)
+    }
 
-const findMany = async () => {
-    return await fetcher<Section[]>(`${endpoint}?populate=*`);
+    filterSections(sections: string[], sectionData: Section[]) {
+        const sectionsObject: {
+            [key: string]: Section
+        } = {};
+
+        sections.forEach((section, _) => {
+            const newSection = sectionData.find(x => x.attributes.section === section)
+            if (newSection) {
+                sectionsObject[section] = newSection;
+            }
+        })
+        return sectionsObject
+    }
 }
 
-const findById = async (id: number) => {
-    return await fetcher<Section>(`${endpoint}/${id}?populate=*`);
-}
+const service = new SectionService({
+    plural: "/sections",
+    singular: "/section"
+})
 
-const findBySection = async (sectionName: string) => {
-    return await fetcher<Section[]>(`${endpoint}/?filters[section][$eq]=${sectionName}&populate=*`)
-}
-
-const filterSections = (sectinos: string[], sectionData: Section[]) => {
-    const sectionsObject: {
-        [key: string]: Section
-    } = {};
-
-    sectinos.forEach((section, _) => {
-        const newSection = sectionData.find(x => x.attributes.section === section)
-        if (newSection) {
-            sectionsObject[section] = newSection;
-        }
-    })
-    return sectionsObject
-}
-
-export default {
-    findMany,
-    findById,
-    findBySection,
-    filterSections
-}
+export default service;

@@ -1,27 +1,26 @@
-import type { Metadata } from 'next'
-import './globals.css'
-
+import type { Metadata } from "next";
+import "./globals.css";
+import site from "@/config/site";
 
 export const metadata: Metadata = {
-  title: 'Alper Koşay',
-  description: 'Kişisel portfolyo websitem.',
-  keywords: ["Alper Koşay", "Web Developer", "React Developer"],
+  title: site.title,
+  description: site.description,
+  keywords: site.keywords,
   authors: {
-    name: "Alper Koşay",
-  }
-}
+    name: site.name,
+    url: site.url,
+  },
+  creator: site.name,
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  
   return (
-    <html lang="en">
-      <body>
-        {children}
-      </body>
+    <html lang="tr">
+      <body>{children}</body>
     </html>
-  )
+  );
 }
