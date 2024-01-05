@@ -1,11 +1,8 @@
 "use client";
-// import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import emailjs from "@emailjs/browser";
 import { gsap } from "gsap";
 import SectionTitle from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
@@ -41,38 +38,6 @@ const ContactSection = () => {
 
   const contactFormWrapper = useRef<HTMLFormElement>(null);
 
-  const formInitialValues = {
-    name: "",
-    email: "",
-    message: "",
-  };
-
-  type InitialValues = typeof formInitialValues;
-
-  const FormValidate = (values: InitialValues) => {
-    const errors: Partial<Record<keyof InitialValues, string>> = {};
-
-    if (!values.email) {
-      errors.email = "Email girmeniz zorunludur.";
-    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-      errors.email = "Hatalı mail adresi.";
-    }
-
-    if (!values.name) {
-      errors.name = "İsim girmeniz zorunludur";
-    } else if (values.name.length < 2 || values.name.length > 35) {
-      errors.name = "Hatalı isim girişi.";
-    }
-
-    if (!values.message) {
-      errors.message = "Mesajınızı yazınız.";
-    } else if (values.name.length < 3) {
-      errors.message = "Mesaj yetersiz...";
-    }
-
-    return errors;
-  };
-
   useEffect(() => {
     if (contactFormWrapper.current) {
       gsap.from(contactFormWrapper.current.children, {
@@ -90,57 +55,6 @@ const ContactSection = () => {
     }
   }, []);
 
-  // const handleContactSubmit = (
-  //   values: InitialValues,
-  //   actions: FormikHelpers<InitialValues>
-  // ) => {
-  //   actions.setSubmitting(true);
-
-  //   emailjs
-  //     .send(
-  //       "service_yw7p7jn",
-  //       "template_taelj62",
-  //       {
-  //         user_name: values.name,
-  //         user_email: values.email,
-  //         message: values.message,
-  //       },
-  //       "8rnHVwq8jxU7nr7Se"
-  //     )
-  //     .then(
-  //       (result) => {
-  //         setTimeout(() => {
-  //           actions.setSubmitting(false);
-  //           toast.success("Mesajınız başarıyla alınmıştır.", {
-  //             position: "top-center",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //             theme: "light",
-  //           });
-  //         }, 1500);
-  //       },
-  //       (error) => {
-  //         setTimeout(() => {
-  //           actions.setSubmitting(false);
-  //           toast.error("Mesajınız alınamadı.", {
-  //             position: "top-center",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //             theme: "light",
-  //           });
-  //         }, 1500);
-  //       }
-  //     );
-  // };
-
   const onSubmit = async (values: Contact) => {
     try {
       setIsSubmitting(true);
@@ -149,8 +63,16 @@ const ContactSection = () => {
 
         body: JSON.stringify(values),
       });
-      console.log("res.headers", res.headers);
+      if (res.status === 429) {
+        return toast({
+          title: "Mesaj gönderme limitine ulaştınız",
+          description: "lütfen 60 saniye bekleyiniz.",
+          variant: "destructive",
+        });
+      }
+
       if (!res.ok) throw new Error("Email error");
+
       toast({
         title: "Mesajınız başarıyla gönderildi",
       });
