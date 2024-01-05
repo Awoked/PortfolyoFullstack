@@ -33,8 +33,7 @@ async function sendEmail(mailContent: Contact) {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const userKey = req.headers.get("x-user-key") || req.ip || "Limiter";
-
+  const userKey = req.headers.get("x-real-ip") || req.ip || "Limiter";
   const rateLimitResponse = await rateLimit(userKey, 2, 60000);
 
   if (rateLimitResponse) return rateLimitResponse;

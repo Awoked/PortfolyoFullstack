@@ -58,8 +58,14 @@ const ContactSection = () => {
   const onSubmit = async (values: Contact) => {
     try {
       setIsSubmitting(true);
+      const ipRes = await fetch("https://api.ipify.org?format=json");
+      const { ip }: { ip: string } = await ipRes.json();
+
       const res = await fetch("/api/contact", {
         method: "POST",
+        headers: {
+          "x-real-ip": ip,
+        },
 
         body: JSON.stringify(values),
       });
