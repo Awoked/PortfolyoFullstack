@@ -1,4 +1,4 @@
-import DrawingsGrid from "../_components/Sections/Drawings/DrawingsGrid";
+import DrawingsGrid from "../_components/Drawings/DrawingsGrid";
 import Breadcrumb from "@/components/ui/breadcrumb";
 import SectionTitle from "@/components/ui/section-title";
 import api from "@/services/api";

@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Contact, contactSchema } from "@/lib/validations/contact";
-
 import {
   Form,
   FormControl,
@@ -23,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const ContactSection = () => {
   const form = useForm<Contact>({
@@ -34,7 +34,9 @@ const ContactSection = () => {
     },
   });
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { isSubmitting } = form.formState;
+  const [captcha, setCaptcha] = useState<string | null>();
+  const reCaptchaRef = useRef<any>();
 
   const contactFormWrapper = useRef<HTMLFormElement>(null);
 
@@ -57,7 +59,8 @@ const ContactSection = () => {
 
   const onSubmit = async (values: Contact) => {
     try {
-      setIsSubmitting(true);
+      if (!captcha) throw new Error("Captcha not valid", { cause: "captcha" });
+
       const ipRes = await fetch("https://api.ipify.org?format=json");
       const { ip }: { ip: string } = await ipRes.json();
 
@@ -82,13 +85,22 @@ const ContactSection = () => {
       toast({
         title: "Mesajınız başarıyla gönderildi",
       });
+      reCaptchaRef.current.reset();
     } catch (err) {
+      const error = err as { cause?: "captcha" };
+
+      if (error.cause === "captcha") {
+        toast({
+          title: "Captcha doğrulanamadı",
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
         title: "Mesajınız gönderilirken bir sorun oluştu",
         variant: "destructive",
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -101,76 +113,6 @@ const ContactSection = () => {
       <div className="container">
         <article className="w-full md:w-1/2 mx-auto">
           <div className="form-wrapper w-full">
-            {/* <Formik
-              initialValues={formInitialValues}
-              onSubmit={handleContactSubmit}
-              validate={FormValidate}
-              validateOnSubmit={true}
-              validateOnChange={true}
-              validateOnBlur={false}
-            >
-              {({ isSubmitting }) => (
-                <Form>
-                  <div
-                    className="form-inner flex flex-col gap-4"
-                    ref={contactFormWrapper}
-                  >
-                    <div className="form-group">
-                      <label htmlFor="name">Adınız</label>
-                      <Field
-                        name="name"
-                        id="name"
-                        placeholder="Adınız"
-                        className="contact-form-input"
-                      />
-                      <div className="error">
-                        <ErrorMessage name="name" />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="email">E-Mail</label>
-                      <Field
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Mail Adresiniz"
-                        className="contact-form-input"
-                      />
-                      <div className="error">
-                        <ErrorMessage name="email" />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="message">Mesaj</label>
-                      <Field
-                        name="message"
-                        id="message"
-                        as="textarea"
-                        placeholder="Mesajınız..."
-                        className="contact-form-input h-full min-h-[150px]"
-                      />
-                      <div className="error">
-                        <ErrorMessage name="message" />
-                      </div>
-                    </div>
-                    <Button type="submit" disabled={isSubmitting}>
-                      {isSubmitting ? (
-                        <div className="flex justify-center items-center gap-2">
-                          <span>Gönderiliyor</span>
-                          <span className="animate-spin">
-                            <AiOutlineLoading3Quarters />
-                          </span>
-                        </div>
-                      ) : (
-                        <span>Gönder</span>
-                      )}
-                    </Button>
-                  </div>
-                  <ToastContainer />
-                </Form>
-              )}
-            </Formik> */}
-
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -215,6 +157,13 @@ const ContactSection = () => {
                       <FormMessage />
                     </FormItem>
                   )}
+                />
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT}
+                  theme="dark"
+                  className="mx-auto w-max"
+                  onChange={setCaptcha}
+                  ref={reCaptchaRef}
                 />
                 <div className="flex justify-center">
                   <Button type="submit" disabled={isSubmitting}>

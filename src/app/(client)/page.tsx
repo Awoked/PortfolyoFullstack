@@ -1,9 +1,9 @@
-import HeroSection from "./_components/Sections/Hero";
-import AboutSection from "./_components/Sections/About";
-import SkillsSection from "./_components/Sections/Skills";
-import ProjectsSection from "./_components/Sections/Projects";
-import DrawingsSection from "./_components/Sections/Drawings";
-import ContactSection from "./_components/Sections/Contact";
+import HeroSection from "./_components/Hero";
+import AboutSection from "./_components/About";
+import SkillsSection from "./_components/Skills";
+import ProjectsSection from "./_components/Projects";
+import DrawingsSection from "./_components/Drawings";
+import ContactSection from "./_components/Contact";
 
 import api from "@/services/api";
 import { ScrollControls } from "@react-three/drei";

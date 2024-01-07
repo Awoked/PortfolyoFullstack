@@ -1,4 +1,4 @@
-import DrawingsGrid from "../_components/Sections/Drawings/DrawingsGrid";
+import DrawingsGrid from "../_components/Drawings/DrawingsGrid";
 import Pagination from "@/components/ui/pagination";
 import api from "@/services/api";
 import { redirect } from "next/navigation";

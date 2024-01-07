@@ -9,14 +9,14 @@ import SplitType from "split-type";
 import { TfiMouse } from "react-icons/tfi";
 
 import WorldCanvas from "./WorldCanvas";
-import dynamic from "next/dynamic";
-import { ScrollControls } from "@react-three/drei";
-// const WorldCanvas = dynamic(() => import("./WorldCanvas"), { ssr: false });
+import { useTheme } from "next-themes";
 
 const HeroSection = ({ sectionData }: { sectionData: Section }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const scrollDownRef = useRef<HTMLDivElement>(null);
+
+  const theme = useTheme();
 
   // First Load Animations
   useLayoutEffect(() => {
@@ -102,9 +102,11 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
           </button>
         </div>
       </section>
-      <div className="fixed -z-10 w-full h-screen left-0 top-0">
-        <WorldCanvas />
-      </div>
+      {theme.resolvedTheme === "dark" ? (
+        <div className="fixed -z-10 w-full h-screen left-0 top-0">
+          <WorldCanvas />
+        </div>
+      ) : null}
     </>
   );
 };
