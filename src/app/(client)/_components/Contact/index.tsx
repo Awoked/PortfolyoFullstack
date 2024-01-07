@@ -35,6 +35,7 @@ const ContactSection = () => {
   });
   const { toast } = useToast();
   const { isSubmitting } = form.formState;
+
   const [captcha, setCaptcha] = useState<string | null>();
   const reCaptchaRef = useRef<any>();
 
@@ -86,6 +87,7 @@ const ContactSection = () => {
         title: "Mesajınız başarıyla gönderildi",
       });
       reCaptchaRef.current.reset();
+      form.reset();
     } catch (err) {
       const error = err as { cause?: "captcha" };
 
