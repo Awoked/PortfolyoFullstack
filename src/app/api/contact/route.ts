@@ -41,6 +41,16 @@ export async function POST(req: NextRequest) {
   try {
     contactSchema.parse(body);
     sendEmail(body);
+    const captchaRes = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SERVER}&response=${body.captchaToken}`,
+      {
+        method: "POST",
+      }
+    );
+    const captchaData = await captchaRes.json();
+    if (!captchaData.success) {
+      throw new Error("Captcha error", { cause: "captcha" });
+    }
 
     return NextResponse.json(
       { message: "Mesajınız başarıyla alındı" },
@@ -49,6 +59,18 @@ export async function POST(req: NextRequest) {
       }
     );
   } catch (err) {
+    const error = err as { cause: "captcha" };
+    if (error?.cause === "captcha") {
+      return NextResponse.json(
+        {
+          message: "Captcha doğrulanmadı!",
+        },
+        {
+          status: 500,
+        }
+      );
+    }
+
     return NextResponse.json(
       { message: "Mesajınız Alınamadı" },
       { status: 500 }
