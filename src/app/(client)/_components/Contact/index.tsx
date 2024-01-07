@@ -71,7 +71,7 @@ const ContactSection = () => {
           "x-real-ip": ip,
         },
 
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, captchaToken: captcha }),
       });
       if (res.status === 429) {
         return toast({
