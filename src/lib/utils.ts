@@ -17,7 +17,7 @@ export async function fetcher<T>(url: string, params?: RequestInit): Promise<Pay
   try {
     const response = await fetch(`${config.strapiURL + url}`, {
       next: {
-        revalidate: 1200,
+        revalidate: 0,
       },
       ...params,
     });
