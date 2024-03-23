@@ -6,7 +6,6 @@ import DrawingsSection from "./_components/Drawings";
 import ContactSection from "./_components/Contact";
 
 import api from "@/services/api";
-import { ScrollControls } from "@react-three/drei";
 
 export default async function Home() {
   const { data: sectionsData } = await api.sections.findMany();
