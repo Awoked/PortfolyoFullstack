@@ -10,12 +10,15 @@ import { TfiMouse } from "react-icons/tfi";
 
 import WorldCanvas from "./WorldCanvas";
 import { useTheme } from "next-themes";
+import useScroll from "@/hooks/useScroll";
+
+import { useGSAP } from "@gsap/react";
 
 const HeroSection = ({ sectionData }: { sectionData: Section }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const scrollDownRef = useRef<HTMLDivElement>(null);
-
+  const { scrollCount } = useScroll();
   const theme = useTheme();
 
   // First Load Animations
@@ -67,8 +70,37 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
     window.scrollTo({ top: window.innerHeight - 100, behavior: "smooth" });
   };
 
+  const COLORS = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
+  const auroraRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      repeat: -1,
+      yoyo: true,
+    });
+    COLORS.forEach((color, index) => {
+      tl.to(auroraRef.current, {
+        backgroundImage: `radial-gradient(125% 125% at 50% 0%, transparent 55%, ${color})`,
+        duration: 2,
+        ease: "power4.out",
+      });
+    });
+  });
+
   return (
     <>
+      <div
+        ref={auroraRef}
+        className={`fixed inset-0 transition-all duration-1000 ${
+          scrollCount > window.innerHeight / 2
+            ? "opacity-0 translate-y-1/2"
+            : "opacity-100"
+        }`}
+        style={{
+          backgroundImage:
+            "radial-gradient(125% 125% at 50% 0%, transparent 55%, #DD335C)",
+        }}
+      ></div>
       <section className={`relative overflow-hidden`}>
         <div className="container">
           <div className="flex justify-center items-center h-[100svh]">
