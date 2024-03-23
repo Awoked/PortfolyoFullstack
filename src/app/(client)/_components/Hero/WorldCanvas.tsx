@@ -102,12 +102,39 @@ export default function WorldCanvas() {
         <Canvas className="w-max h-max absolute left-0">
           {/* <Blackholenew /> */}
           {/* <Starship /> */}
-          <UnicornNew />
-          <Mars />
-          <Moon />
-          <Globe />
+          <CanvasComponents />
+          {/* <Mars />
+          <Moon /> */}
+          {/* <Globe /> */}
         </Canvas>
       </div>
+    </>
+  );
+}
+
+function CanvasComponents() {
+  const isMobile = matchMedia("(max-width:1023px)").matches;
+
+  const starsRef = useRef<any>(null!);
+
+  useFrame(({ clock }) => {
+    const elapsedTime = clock.getElapsedTime();
+
+    starsRef.current.rotation.y = elapsedTime / 42;
+  });
+  return (
+    <>
+      <pointLight color={"#f6f3ea"} position={[0.8, 0.1, 5]} intensity={32.2} />
+      <Stars
+        radius={255}
+        depth={60}
+        count={isMobile ? 4000 : 6000}
+        factor={5}
+        saturation={0.5}
+        fade={true}
+        ref={starsRef}
+      />
+      <UnicornNew />
     </>
   );
 }
