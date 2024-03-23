@@ -92,7 +92,7 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
       <div
         ref={auroraRef}
         className={`fixed inset-0 transition-all duration-1000 ${
-          scrollCount > window.innerHeight / 2
+          scrollCount > (window?.innerHeight ?? 768) / 2
             ? "opacity-0 translate-y-1/2"
             : "opacity-100"
         }`}
