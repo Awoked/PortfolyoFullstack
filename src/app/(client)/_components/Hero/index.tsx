@@ -91,7 +91,7 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
       <div
         ref={auroraRef}
         className={`fixed inset-0 transition-all duration-1000 ${
-          scrollCount > 500 ? "opacity-0 translate-y-1/2" : "opacity-100"
+          scrollCount > 300 ? "opacity-0 translate-y-1/2" : "opacity-100"
         }`}
         style={{
           backgroundImage:
