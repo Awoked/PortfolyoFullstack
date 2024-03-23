@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { Power3, Expo, gsap } from "gsap";
 
@@ -76,7 +76,6 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
   useGSAP(() => {
     const tl = gsap.timeline({
       repeat: -1,
-      yoyo: true,
     });
     COLORS.forEach((color, index) => {
       tl.to(auroraRef.current, {
@@ -92,9 +91,7 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
       <div
         ref={auroraRef}
         className={`fixed inset-0 transition-all duration-1000 ${
-          scrollCount > (window?.innerHeight ?? 768) / 2
-            ? "opacity-0 translate-y-1/2"
-            : "opacity-100"
+          scrollCount > 300 ? "opacity-0 translate-y-1/2" : "opacity-100"
         }`}
         style={{
           backgroundImage:
@@ -134,11 +131,9 @@ const HeroSection = ({ sectionData }: { sectionData: Section }) => {
           </button>
         </div>
       </section>
-      {theme.resolvedTheme === "dark" ? (
-        <div className="fixed -z-10 w-full h-screen left-0 top-0">
-          <WorldCanvas />
-        </div>
-      ) : null}
+      <div className="fixed -z-10 w-full h-screen left-0 top-0">
+        <WorldCanvas />
+      </div>
     </>
   );
 };

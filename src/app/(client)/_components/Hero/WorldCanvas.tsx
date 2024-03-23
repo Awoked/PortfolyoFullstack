@@ -134,6 +134,7 @@ function CanvasComponents() {
         fade={true}
         ref={starsRef}
       />
+
       <UnicornNew />
     </>
   );
